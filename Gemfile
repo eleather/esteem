@@ -21,7 +21,7 @@ gem 'devise'
 
 
 # Gems for views.
-gem 'haml'
+gem 'haml-rails'
 
 
 group :test do
