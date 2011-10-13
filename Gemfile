@@ -20,6 +20,10 @@ gem 'jquery-rails'
 gem 'devise'
 
 
+# Gems for views.
+gem 'haml'
+
+
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
