@@ -24,7 +24,10 @@ gem 'devise'
 gem 'haml-rails'
 
 
-group :test do
+group :test do  
   # Pretty printed test output
   gem 'turn', :require => false
+  
+  # Acceptance tests
+  gem 'capybara'
 end
