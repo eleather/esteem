@@ -28,6 +28,9 @@ group :test do
   # Pretty printed test output
   gem 'turn', :require => false
   
+  # Use rspec for testing
+  gem 'rspec-rails'
+  
   # Acceptance tests
   gem 'capybara'
 end
