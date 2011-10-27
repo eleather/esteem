@@ -39,4 +39,5 @@ group :test do
   
   # Autorun tests on file save
   gem 'guard-rails'
+  gem 'rb-fsevent'
 end
