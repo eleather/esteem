@@ -4,7 +4,6 @@
   %tr
     %th Name
     %th Slug
-    %th Description
     %th
     %th
     %th
@@ -13,7 +12,6 @@
     %tr
       %td= organization.name
       %td= organization.slug
-      %td= organization.description
       %td= link_to 'Show', organization
       %td= link_to 'Edit', edit_organization_path(organization)
       %td= link_to 'Destroy', organization, :confirm => 'Are you sure?', :method => :delete
