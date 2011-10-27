@@ -18,7 +18,6 @@ describe "projects/edit.html.haml" do
       assert_select "input#project_name", :name => "project[name]"
       assert_select "input#project_slug", :name => "project[slug]"
       assert_select "textarea#project_description", :name => "project[description]"
-      assert_select "input#project_organization_id", :name => "project[organization_id]"
     end
   end
 end
