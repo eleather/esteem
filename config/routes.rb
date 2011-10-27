@@ -1,4 +1,6 @@
 Esteem::Application.routes.draw do
+  resources :projects
+
   resources :organizations
 
   # The priority is based upon order of creation:
