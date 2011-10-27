@@ -24,13 +24,19 @@ gem 'devise'
 gem 'haml-rails'
 
 
+# Use rspec for testing
+gem 'rspec-rails', :group => [:test, :development]
 group :test do  
   # Pretty printed test output
   gem 'turn', :require => false
   
-  # Use rspec for testing
-  gem 'rspec-rails'
+  # Use factory girl instead of fixtures
+  gem 'factory_girl_rails'
   
   # Acceptance tests
   gem 'capybara'
+  gem 'launchy'
+  
+  # Autorun tests on file save
+  gem 'guard-rails'
 end
