@@ -15,4 +15,10 @@ describe "organizations/show.html.haml" do
     page.should have_content(@organization.slug)
     page.should have_content(@organization.description)
   end
+  
+  it 'should render a list of projects that are part of this organization' do
+    @organization.projects.each do |project|
+      page.should have_link(project.name, :href => project_path(project))
+    end
+  end
 end
