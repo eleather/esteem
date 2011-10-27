@@ -16,7 +16,7 @@ describe "organizations/new.html.haml" do
     assert_select "form", :action => organizations_path, :method => "post" do
       assert_select "input#organization_name", :name => "organization[name]"
       assert_select "input#organization_slug", :name => "organization[slug]"
-      assert_select "input#organization_description", :name => "organization[description]"
+      assert_select "textarea#organization_description", :name => "organization[description]"
     end
   end
 end
