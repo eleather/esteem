@@ -4,13 +4,17 @@ require 'spec_helper'
 # correctly independently. 
 
 describe 'the header layout partial' do
-  before(:each) do
-    visit root_path
-  end
-  
   describe 'when the user is logged out' do
-    it 'should have a login link' do
-      page.should have_link('Login', :href => new_user_session_path)
+    before(:each) do
+      visit root_path
+    end
+    
+    it 'should have a sign up link' do
+      page.should have_link('Sign up', :href => new_user_registration_path)
+    end
+    
+    it 'should have a log in link' do
+      page.should have_link('Log in', :href => new_user_session_path)
     end
   end
   
@@ -28,8 +32,12 @@ describe 'the header layout partial' do
       click_button('Sign in')
     end
     
-    it 'should not have a login link' do
-      page.should_not have_link('Login')
+    it 'should not have a sign up link' do
+      page.should_not have_link('Sign up')
+    end
+    
+    it 'should not have a log in link' do
+      page.should_not have_link('Log in')
     end
     
     it 'should display the users email linking to the user edit page' do
