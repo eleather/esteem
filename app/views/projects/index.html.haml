@@ -13,7 +13,7 @@
     %tr
       %td= project.name
       %td= project.slug
-      %td= link_to project.organization.name, project.organiziation
+      %td= link_to project.organization.name, project.organization
       %td= link_to 'Show', project
       %td= link_to 'Edit', edit_project_path(project)
       %td= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
