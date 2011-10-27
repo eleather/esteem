@@ -8,10 +8,7 @@
   = @suggestion.description
 %p
   %b Project:
-  = @suggestion.project_id
-%p
-  %b User:
-  = @suggestion.user_id
+  = link_to @suggestion.project.name, @suggestion.project
 
 = link_to 'Edit', edit_suggestion_path(@suggestion)
 \|
