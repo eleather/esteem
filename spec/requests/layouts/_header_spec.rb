@@ -43,5 +43,9 @@ describe 'the header layout partial' do
     it 'should display the users email linking to the user edit page' do
       page.should have_content(@user.email)
     end
+    
+    it 'should have a log out link' do
+      page.should have_link('Log out', {:href => destroy_user_session_path, 'data-method' => 'delete'})
+    end
   end
 end
