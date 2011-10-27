@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'suggestions/show.html.haml' do
   before(:all) do
     # Create a Suggestion
-    @project = Factory(:project_with_suggestions)
+    @project = Factory(:project_with_questions_and_suggestions)
     @suggestion = @project.suggestions.first
   end
   

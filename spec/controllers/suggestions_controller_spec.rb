@@ -29,7 +29,7 @@ describe SuggestionsController do
 
   describe "GET index" do
     it "assigns all suggestions as @suggestions" do
-      suggestions = Factory(:project_with_suggestions).suggestions
+      suggestions = Factory(:project_with_questions_and_suggestions).suggestions
       get :index
       assigns(:suggestions).should eq(suggestions)
     end

@@ -1,4 +1,6 @@
 Esteem::Application.routes.draw do
+  resources :questions
+
   resources :suggestions
 
   resources :projects
