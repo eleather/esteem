@@ -38,5 +38,6 @@ group :test do
   gem 'launchy'
   
   # Autorun tests on file save
-  gem 'guard-rails'
+  gem 'guard-rspec'
+  gem 'rb-fsevent'
 end
