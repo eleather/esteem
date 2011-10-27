@@ -24,7 +24,11 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   # GET /projects/new.json
   def new
-    @project = Project.new
+    if (organization_id = params[:organization_id])
+      @project = Project.new(:organization_id => organization_id)
+    else
+      raise RuntimeError.new('You cannot create a new project without passing an organization_id parameter.')
+    end
 
     respond_to do |format|
       format.html # new.html.erb
