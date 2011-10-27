@@ -10,18 +10,18 @@ end
 ### Project Factories ###
 
 Factory.define(:project) do |project|
-  project.sequence(:name) { |n| "Name #{n}" }
-  project.sequence(:slug) { |n| "slug-#{n}"}
-  project.sequence(:description) { |n| "Description #{n}"}
+  project.sequence(:name) { |n| "Project Name #{n}" }
+  project.sequence(:slug) { |n| "project-slug-#{n}"}
+  project.sequence(:description) { |n| "Project Description #{n}"}
 end
 
 
 ### Organization Factories ###
 
 Factory.define(:organization) do |organization|
-  organization.sequence(:name) { |n| "Name #{n}" }
-  organization.sequence(:slug) { |n| "slug-#{n}"}
-  organization.sequence(:description) { |n| "Description #{n}"}
+  organization.sequence(:name) { |n| "Organization Name #{n}" }
+  organization.sequence(:slug) { |n| "organization-slug-#{n}"}
+  organization.sequence(:description) { |n| "Organization Description #{n}"}
 end
 
 Factory.define(:organization_with_projects, :parent => :organization) do |organization|
