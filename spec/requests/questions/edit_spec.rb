@@ -3,8 +3,7 @@ require 'spec_helper'
 describe 'questions/edit.html.haml' do
   before(:each) do
     # Get a Question
-    @project = Factory(:project_with_questions_and_suggestions)
-    @question = @project.questions.first
+    @question = Factory(:question)
     
     visit edit_question_path(@question)
   end

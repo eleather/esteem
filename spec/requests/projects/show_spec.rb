@@ -3,8 +3,7 @@ require 'spec_helper'
 describe "projects/show.html.haml" do
   before(:all) do
     # Create a Project
-    @organization = Factory(:organization_with_projects)
-    @project = @organization.projects.first
+    @project = Factory(:project)
     
     visit project_path(@project)
   end
@@ -13,6 +12,6 @@ describe "projects/show.html.haml" do
     page.should have_content(@project.name)
     page.should have_content(@project.slug)
     page.should have_content(@project.description)
-    page.should have_link(@organization.name, :href => organization_path(@organization))
+    page.should have_link(@project.organization.name, :href => organization_path(@project.organization))
   end
 end

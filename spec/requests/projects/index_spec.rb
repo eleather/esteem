@@ -12,14 +12,13 @@ describe 'projects/index.html.haml' do
   describe 'when some projects exist' do
     before(:all) do
       # Create a Project
-      @organization = Factory(:organization_with_projects)
-      @project = @organization.projects.first
+      @project = Factory(:project)
     end
     
     it 'renders a list of projects' do
       page.should have_content(@project.name)
       page.should have_content(@project.slug)
-      page.should have_link(@organization.name, :href => organization_path(@organization))
+      page.should have_link(@project.organization.name, :href => organization_path(@project.organization))
       
       # Don't display the project description on this page - it's likely to be 
       # too wordy.

@@ -7,27 +7,6 @@ Factory.define(:user) do |user|
 end
 
 
-### Project Factories ###
-
-Factory.define(:project) do |project|
-  project.sequence(:name) { |n| "Project Name #{n}" }
-  project.sequence(:slug) { |n| "project-slug-#{n}"}
-  project.sequence(:description) { |n| "Project Description #{n}"}
-end
-
-Factory.define(:project_with_questions_and_suggestions, :parent => :project) do |project|
-  project.after_create do |p|
-    # Create projects
-    Factory(:question, :project => p)
-    Factory(:question, :project => p)
-    
-    # Create suggestions
-    Factory(:suggestion, :project => p, :user => Factory(:user))
-    Factory(:suggestion, :project => p, :user => Factory(:user))
-  end
-end
-
-
 ### Organization Factories ###
 
 Factory.define(:organization) do |organization|
@@ -44,11 +23,56 @@ Factory.define(:organization_with_projects, :parent => :organization) do |organi
 end
 
 
+### Project Factories ###
+
+Factory.define(:project) do |project|
+  project.sequence(:name) { |n| "Project Name #{n}" }
+  project.sequence(:slug) { |n| "project-slug-#{n}"}
+  project.sequence(:description) { |n| "Project Description #{n}"}
+  
+  # Setup associations.
+  project.organization
+end
+
+Factory.define(:project_with_questions_and_suggestions, :parent => :project) do |project|
+  project.after_create do |p|
+    # Create projects
+    Factory(:question_with_responses, :project => p)
+    Factory(:question_with_responses, :project => p)
+    
+    # Create suggestions
+    Factory(:suggestion, :project => p, :user => Factory(:user))
+    Factory(:suggestion, :project => p, :user => Factory(:user))
+  end
+end
+
+
 ### Question Factories ###
 
 Factory.define(:question) do |question|
   question.sequence(:title) { |n| "Question Title #{n}" }
   question.sequence(:description) { |n| "Question Description #{n}" }
+  
+  # Setup associations.
+  question.project
+end
+
+Factory.define(:question_with_responses, :parent => :question) do |question| 
+  question.after_create do |q|
+    Factory(:question_response, :question => q, :user => Factory(:user))
+    Factory(:question_response, :question => q, :user => Factory(:user))
+  end
+end
+
+
+### Question Response Factories ###
+
+Factory.define(:question_response) do |question_response|
+  question_response.response rand(4) + 1
+  
+  # Setup associations.
+  question_response.question
+  question_response.user
 end
 
 
@@ -57,4 +81,8 @@ end
 Factory.define(:suggestion) do |suggestion|
   suggestion.sequence(:title) { |n| "Suggestion Title #{n}" }
   suggestion.sequence(:description) { |n| "Suggestion Description #{n}" }
+  
+  # Setup assocations.
+  suggestion.project
+  suggestion.user
 end

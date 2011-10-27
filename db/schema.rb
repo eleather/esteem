@@ -11,38 +11,46 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111027193257) do
+ActiveRecord::Schema.define(:version => 20111027203416) do
 
   create_table "organizations", :force => true do |t|
-    t.string   "name"
-    t.string   "slug"
-    t.string   "description"
+    t.string   "name",        :null => false
+    t.string   "slug",        :null => false
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "projects", :force => true do |t|
-    t.string   "name"
-    t.string   "slug"
-    t.string   "description"
-    t.integer  "organization_id"
+    t.string   "name",            :null => false
+    t.string   "slug",            :null => false
+    t.text     "description"
+    t.integer  "organization_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "question_responses", :force => true do |t|
+    t.integer  "question_id", :null => false
+    t.integer  "user_id",     :null => false
+    t.integer  "response",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "questions", :force => true do |t|
-    t.string   "title"
-    t.string   "description"
-    t.integer  "project_id"
+    t.string   "title",       :null => false
+    t.text     "description"
+    t.integer  "project_id",  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "suggestions", :force => true do |t|
-    t.string   "title"
+    t.string   "title",       :null => false
     t.text     "description"
-    t.integer  "project_id"
-    t.integer  "user_id"
+    t.integer  "project_id",  :null => false
+    t.integer  "user_id",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

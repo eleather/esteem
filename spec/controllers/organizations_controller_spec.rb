@@ -19,27 +19,30 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe OrganizationsController do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Organization. As you add validations to Organization, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
+  
+  before(:all) do
+    @organization = Factory(:organization)
+    
+    # This should return the minimal set of attributes required to create a valid
+    # Organization. As you add validations to Organization, be sure to
+    # update the return value of this method accordingly.
+    @valid_attributes = {
+      :name => @organization.name, 
+      :slug => @organization.slug
+    }
   end
 
   describe "GET index" do
     it "assigns all organizations as @organizations" do
-      organization = Organization.create! valid_attributes
       get :index
-      assigns(:organizations).should eq([organization])
+      assigns(:organizations).should eq([@organization])
     end
   end
 
   describe "GET show" do
     it "assigns the requested organization as @organization" do
-      organization = Organization.create! valid_attributes
-      get :show, :id => organization.id
-      assigns(:organization).should eq(organization)
+      get :show, :id => @organization.id
+      assigns(:organization).should eq(@organization)
     end
   end
 
@@ -52,9 +55,8 @@ describe OrganizationsController do
 
   describe "GET edit" do
     it "assigns the requested organization as @organization" do
-      organization = Organization.create! valid_attributes
-      get :edit, :id => organization.id
-      assigns(:organization).should eq(organization)
+      get :edit, :id => @organization.id
+      assigns(:organization).should eq(@organization)
     end
   end
 
@@ -62,18 +64,18 @@ describe OrganizationsController do
     describe "with valid params" do
       it "creates a new Organization" do
         expect {
-          post :create, :organization => valid_attributes
+          post :create, :organization => @valid_attributes
         }.to change(Organization, :count).by(1)
       end
 
       it "assigns a newly created organization as @organization" do
-        post :create, :organization => valid_attributes
+        post :create, :organization => @valid_attributes
         assigns(:organization).should be_a(Organization)
         assigns(:organization).should be_persisted
       end
 
       it "redirects to the created organization" do
-        post :create, :organization => valid_attributes
+        post :create, :organization => @valid_attributes
         response.should redirect_to(Organization.last)
       end
     end
@@ -98,42 +100,37 @@ describe OrganizationsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested organization" do
-        organization = Organization.create! valid_attributes
         # Assuming there are no other organizations in the database, this
         # specifies that the Organization created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Organization.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => organization.id, :organization => {'these' => 'params'}
+        put :update, :id => @organization.id, :organization => {'these' => 'params'}
       end
 
       it "assigns the requested organization as @organization" do
-        organization = Organization.create! valid_attributes
-        put :update, :id => organization.id, :organization => valid_attributes
-        assigns(:organization).should eq(organization)
+        put :update, :id => @organization.id, :organization => @valid_attributes
+        assigns(:organization).should eq(@organization)
       end
 
       it "redirects to the organization" do
-        organization = Organization.create! valid_attributes
-        put :update, :id => organization.id, :organization => valid_attributes
-        response.should redirect_to(organization)
+        put :update, :id => @organization.id, :organization => @valid_attributes
+        response.should redirect_to(@organization)
       end
     end
 
     describe "with invalid params" do
       it "assigns the organization as @organization" do
-        organization = Organization.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Organization.any_instance.stub(:save).and_return(false)
-        put :update, :id => organization.id, :organization => {}
-        assigns(:organization).should eq(organization)
+        put :update, :id => @organization.id, :organization => {}
+        assigns(:organization).should eq(@organization)
       end
 
       it "re-renders the 'edit' template" do
-        organization = Organization.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Organization.any_instance.stub(:save).and_return(false)
-        put :update, :id => organization.id, :organization => {}
+        put :update, :id => @organization.id, :organization => {}
         response.should render_template("edit")
       end
     end
@@ -141,14 +138,14 @@ describe OrganizationsController do
 
   describe "DELETE destroy" do
     it "destroys the requested organization" do
-      organization = Organization.create! valid_attributes
+      organization = Factory(:organization_with_projects)
       expect {
         delete :destroy, :id => organization.id
       }.to change(Organization, :count).by(-1)
     end
 
     it "redirects to the organizations list" do
-      organization = Organization.create! valid_attributes
+      organization = Factory(:organization_with_projects)
       delete :destroy, :id => organization.id
       response.should redirect_to(organizations_url)
     end

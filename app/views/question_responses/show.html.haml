@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Question:
+  = @question_response.question_id
+%p
+  %b User:
+  = @question_response.user_id
+%p
+  %b Response:
+  = @question_response.response
+
+= link_to 'Edit', edit_question_response_path(@question_response)
+\|
+= link_to 'Back', question_responses_path
