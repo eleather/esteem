@@ -21,4 +21,8 @@ describe "organizations/show.html.haml" do
       page.should have_link(project.name, :href => project_path(project))
     end
   end
+  
+  it 'should have a link that allows the user to create a new project under this organization' do
+    page.should have_link('New Project', :href => new_project_path(:organization_id => @organization.id))
+  end
 end

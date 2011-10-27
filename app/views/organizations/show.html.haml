@@ -18,3 +18,4 @@
   %h3 Projects
   - @organization.projects.each do |project|
     = link_to project.name, project
+  = link_to 'New Project', new_project_path(:organization_id => @organization.id)
