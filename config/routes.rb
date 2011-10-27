@@ -1,4 +1,6 @@
 Esteem::Application.routes.draw do
+  resources :suggestions
+
   resources :projects
 
   resources :organizations

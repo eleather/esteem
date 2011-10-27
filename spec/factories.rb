@@ -15,6 +15,13 @@ Factory.define(:project) do |project|
   project.sequence(:description) { |n| "Project Description #{n}"}
 end
 
+Factory.define(:project_with_suggestions, :parent => :project) do |project|
+  project.after_create do |p|
+    Factory(:suggestion, :project => p, :user => Factory(:user))
+    Factory(:suggestion, :project => p, :user => Factory(:user))
+  end
+end
+
 
 ### Organization Factories ###
 
@@ -26,7 +33,15 @@ end
 
 Factory.define(:organization_with_projects, :parent => :organization) do |organization|
   organization.after_create do |o| 
-    Factory(:project, :organization => o)
-    Factory(:project, :organization => o)
+    Factory(:project_with_suggestions, :organization => o)
+    Factory(:project_with_suggestions, :organization => o)
   end
+end
+
+
+### Suggestion Factories ###
+
+Factory.define(:suggestion) do |suggestion|
+  suggestion.sequence(:title) { |n| "Suggestion Title #{n}" }
+  suggestion.sequence(:description) { |n| "Suggestion Description #{n}" }
 end
