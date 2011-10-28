@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Suggestion:
+  = @suggestion_vote.suggestion_id
+%p
+  %b User:
+  = @suggestion_vote.user_id
+%p
+  %b Vote:
+  = @suggestion_vote.vote
+
+= link_to 'Edit', edit_suggestion_vote_path(@suggestion_vote)
+\|
+= link_to 'Back', suggestion_votes_path

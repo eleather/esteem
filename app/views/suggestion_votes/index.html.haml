@@ -1,0 +1,21 @@
+%h1 Listing suggestion_votes
+
+%table
+  %tr
+    %th Suggestion
+    %th Vote
+    %th
+    %th
+    %th
+
+  - @suggestion_votes.each do |suggestion_vote|
+    %tr
+      %td= link_to suggestion_vote.suggestion.title, suggestion_vote.suggestion
+      %td= suggestion_vote.vote
+      %td= link_to 'Show', suggestion_vote
+      %td= link_to 'Edit', edit_suggestion_vote_path(suggestion_vote)
+      %td= link_to 'Destroy', suggestion_vote, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Suggestion vote', new_suggestion_vote_path

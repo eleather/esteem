@@ -1,4 +1,6 @@
 Esteem::Application.routes.draw do
+  resources :suggestion_votes
+
   resources :radials
 
   resources :question_responses

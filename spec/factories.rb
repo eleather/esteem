@@ -97,3 +97,14 @@ Factory.define(:suggestion) do |suggestion|
   suggestion.project
   suggestion.user
 end
+
+
+### Suggestion Vote Factories ###
+
+Factory.define(:suggestion_vote) do |suggestion_vote|
+  suggestion_vote.vote 1
+  
+  # Setup associations
+  suggestion_vote.suggestion
+  suggestion_vote.user
+end
