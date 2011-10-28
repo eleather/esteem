@@ -1,1 +1,9 @@
 %h1 Welcome to Esteem!
+
+#radar-chart{:style => "margin: 50px;"}
+
+:javascript
+  jQuery(function () {
+    var chart = new RadarChart();
+    chart.draw([4, 5, 5, 5, 5, 5]);
+  });
