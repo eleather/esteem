@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'suggestion_votes/index.html.haml' do
   before(:all) do
     # Create a SuggestionVote
-    @suggestion_vote = Factory(:suggestion_vote)
+    @suggestion_vote = Factory(:suggestion_vote_positive)
   end
   
   before(:each) do

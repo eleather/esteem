@@ -101,10 +101,19 @@ end
 
 ### Suggestion Vote Factories ###
 
+# This factory can't be instantiated on it's own because it doesn't have a vote.
 Factory.define(:suggestion_vote) do |suggestion_vote|
-  suggestion_vote.vote 1
-  
   # Setup associations
   suggestion_vote.suggestion
   suggestion_vote.user
+end
+
+Factory.define(:suggestion_vote_positive, :parent => :suggestion_vote) do |suggestion_vote|
+  suggestion_vote.vote 1
+end
+
+Factory.define(:suggestion_vote_negative, :parent => :suggestion_vote) do |suggestion_vote|
+  suggestion_vote.vote -1
+  
+  
 end

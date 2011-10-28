@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
+    @suggestions = @project.suggestions_ordered_by_vote_score
     
     # New Suggestion for form
     @suggestion = Suggestion.new

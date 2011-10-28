@@ -1,20 +1,19 @@
 require 'spec_helper'
 
 describe "projects/show.html.haml" do
-  before(:all) do
-    # Create a Project
-    @project = Factory(:project)
+  let :project do
+    Factory(:project)
   end
   
   before(:each) do
-    visit project_path(@project)
+    visit project_path(project)
   end
   
   it 'should render the correct record attributes' do
-    page.should have_content(@project.name)
-    page.should have_content(@project.slug)
-    page.should have_content(@project.description)
-    page.should have_link(@project.organization.name, :href => organization_path(@project.organization))
+    page.should have_content(project.name)
+    page.should have_content(project.slug)
+    page.should have_content(project.description)
+    page.should have_link(project.organization.name, :href => organization_path(project.organization))
   end
   
   describe 'in #radials section' do
@@ -47,26 +46,58 @@ describe "projects/show.html.haml" do
       @suggestions_div = page.find('#suggestions')
     end
     
+    def check_for_new_suggestion_box
+      @suggestions_div.should have_selector('#new-suggestion')
+      @suggestions_div.find('#new-suggestion') do |div|
+        div.should have_content('What\'s your suggestion?')
+      end
+    end
+    
     # Make sure new-suggestion box works, either with a spec here or elsewhere.
+    # Make sure suggestion partial contains the correct information, either here or elsewhere.
     
     describe 'when this project has no suggestions' do
       it 'should display the new suggestion box at the top of the section' do
-        @suggestions_div.should have_selector('#new-suggestion')
-        @suggestions_div.find('#new-suggestion') do |div|
-          div.should have_content('What\'s your suggestion?')
-        end
+        check_for_new_suggestion_box
       end
       
-      it 'should have no other content'
+      it 'should have no other content' do
+        page.all('#suggestions > *').size.should eq(1)
+      end
     end
     
     describe 'when this project has less than 8 suggestions' do
-      it 'should display the new suggestion box at the top of the section'
-      it 'should display all suggestions for this project, in most-voted order'
+      let :suggestions do
+        project
+        (1..5).map { Factory(:suggestion, :project => project) }
+      end
+      
+      it 'should display the new suggestion box at the top of the section' do
+        check_for_new_suggestion_box
+      end
+      
+      it 'should display all suggestions for this project, in most-voted order' do
+        Project.should_receive(:find).and_return(project)
+        project.should_receive(:suggestions).and_return(suggestions)
+        suggestions[0].should_receive(:vote_score).twice.and_return(1)
+        suggestions[1].should_receive(:vote_score).twice.and_return(3)
+        suggestions[2].should_receive(:vote_score).twice.and_return(5)
+        suggestions[3].should_receive(:vote_score).twice.and_return(-2)
+        suggestions[4].should_receive(:vote_score).twice.and_return(-4)
+        
+        visit project_path(project)
+        
+        suggestion_divs = page.all('#suggestions > .suggestion')
+        suggestion_divs.size.should == suggestions.size
+        suggestion_divs.map { |d| d.find('.title').text.strip }.should == [suggestions[2].title, suggestions[1].title, suggestions[0].title, suggestions[3].title, suggestions[4].title]
+      end
     end
 
     describe 'when this project has more than 8 suggestions' do
-      it 'should display the new suggestion box at the top of the section'
+      it 'should display the new suggestion box at the top of the section' do
+        check_for_new_suggestion_box
+      end
+      
       it 'should display the 8 most recent suggestions for this project, in most-voted order'
     end
   end

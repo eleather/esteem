@@ -19,16 +19,19 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ProjectsController do
-  before(:all) do
-    @project = Factory(:project)
-    
-    # This should return the minimal set of attributes required to create a valid
-    # Project. As you add validations to Project, be sure to
-    # update the return value of this method accordingly.
-    @valid_attributes = {
-      :name => @project.name,
-      :slug => @project.slug,
-      :organization_id => @project.organization_id
+  let :project do
+    Factory(:project)
+  end
+  
+  # This should return the minimal set of attributes required to create a valid
+  # Project. As you add validations to Project, be sure to
+  # update the return value of this method accordingly.
+  let :valid_attributes do
+    p = Factory.build(:project)
+    {
+      :name => p.name, 
+      :slug => p.slug,
+      :organization_id => p.organization_id
     }
   end
 
@@ -40,9 +43,26 @@ describe ProjectsController do
   end
 
   describe "GET show" do
-    it "assigns the requested project as @project" do
-      get :show, :id => @project.id
-      assigns(:project).should eq(@project)
+    it 'assigns the requested project as @project' do
+      get :show, :id => project.id
+      assigns(:project).should eq(project)
+    end
+    
+    it 'assigns a new Suggestion as @suggestion' do
+      get :show, :id => project.id
+      assigns(:suggestion).should be_a_new(Suggestion)
+    end
+    
+    it 'assigns the project\'s suggestions in sorted order by vote_score as @suggestions' do
+      suggestion1 = Factory(:suggestion, :project => project)
+      suggestion2 = Factory(:suggestion, :project => project)
+      suggestion3 = Factory(:suggestion, :project => project)
+      suggestions = [suggestion1, suggestion3, suggestion2]
+      Project.should_receive(:find).with(project.id.to_s).and_return(project)
+      project.should_receive(:suggestions_ordered_by_vote_score).and_return(suggestions)
+      
+      get :show, :id => project.id
+      assigns(:suggestions).should eq(suggestions)
     end
   end
 
@@ -62,8 +82,8 @@ describe ProjectsController do
 
   describe "GET edit" do
     it "assigns the requested project as @project" do
-      get :edit, :id => @project.id
-      assigns(:project).should eq(@project)
+      get :edit, :id => project.id
+      assigns(:project).should eq(project)
     end
   end
 
@@ -71,18 +91,18 @@ describe ProjectsController do
     describe "with valid params" do
       it "creates a new Project" do
         expect {
-          post :create, :project => @valid_attributes
+          post :create, :project => valid_attributes
         }.to change(Project, :count).by(1)
       end
 
       it "assigns a newly created project as @project" do
-        post :create, :project => @valid_attributes
+        post :create, :project => valid_attributes
         assigns(:project).should be_a(Project)
         assigns(:project).should be_persisted
       end
 
       it "redirects to the created project" do
-        post :create, :project => @valid_attributes
+        post :create, :project => valid_attributes
         response.should redirect_to(Project.last)
       end
     end
@@ -112,17 +132,17 @@ describe ProjectsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Project.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => @project.id, :project => {'these' => 'params'}
+        put :update, :id => project.id, :project => {'these' => 'params'}
       end
 
       it "assigns the requested project as @project" do
-        put :update, :id => @project.id, :project => @valid_attributes
-        assigns(:project).should eq(@project)
+        put :update, :id => project.id, :project => valid_attributes
+        assigns(:project).should eq(project)
       end
 
       it "redirects to the project" do
-        put :update, :id => @project.id, :project => @valid_attributes
-        response.should redirect_to(@project)
+        put :update, :id => project.id, :project => valid_attributes
+        response.should redirect_to(project)
       end
     end
 
@@ -130,14 +150,14 @@ describe ProjectsController do
       it "assigns the project as @project" do
         # Trigger the behavior that occurs when invalid params are submitted
         Project.any_instance.stub(:save).and_return(false)
-        put :update, :id => @project.id, :project => {}
-        assigns(:project).should eq(@project)
+        put :update, :id => project.id, :project => {}
+        assigns(:project).should eq(project)
       end
 
       it "re-renders the 'edit' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Project.any_instance.stub(:save).and_return(false)
-        put :update, :id => @project.id, :project => {}
+        put :update, :id => project.id, :project => {}
         response.should render_template("edit")
       end
     end
@@ -145,14 +165,14 @@ describe ProjectsController do
 
   describe "DELETE destroy" do
     it "destroys the requested project" do
-      project = Project.create! @valid_attributes
+      project = Project.create! valid_attributes
       expect {
         delete :destroy, :id => project.id
       }.to change(Project, :count).by(-1)
     end
 
     it "redirects to the projects list" do
-      project = Project.create! @valid_attributes
+      project = Project.create! valid_attributes
       delete :destroy, :id => project.id
       response.should redirect_to(projects_url)
     end

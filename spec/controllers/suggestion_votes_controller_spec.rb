@@ -19,16 +19,19 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe SuggestionVotesController do
-  before(:all) do
-    @suggestion_vote = Factory(:suggestion_vote)
+  let :suggestion_vote do
+    Factory(:suggestion_vote_positive)
+  end
     
     # This should return the minimal set of attributes required to create a valid
     # SuggestionVote. As you add validations to SuggestionVote, be sure to
     # update the return value of this method accordingly.
-    @valid_attributes = {
-      :suggestion_id => @suggestion_vote.suggestion_id,
-      :user_id => @suggestion_vote.user_id,
-      :vote => @suggestion_vote.vote
+  let :valid_attributes do
+    s = Factory.build(:suggestion_vote_positive)
+    {
+      :suggestion_id => s.suggestion_id,
+      :user_id => s.user_id,
+      :vote => s.vote
     }
   end
 
@@ -41,8 +44,8 @@ describe SuggestionVotesController do
 
   describe "GET show" do
     it "assigns the requested suggestion_vote as @suggestion_vote" do
-      get :show, :id => @suggestion_vote.id
-      assigns(:suggestion_vote).should eq(@suggestion_vote)
+      get :show, :id => suggestion_vote.id
+      assigns(:suggestion_vote).should eq(suggestion_vote)
     end
   end
 
@@ -55,8 +58,8 @@ describe SuggestionVotesController do
 
   describe "GET edit" do
     it "assigns the requested suggestion_vote as @suggestion_vote" do
-      get :edit, :id => @suggestion_vote.id
-      assigns(:suggestion_vote).should eq(@suggestion_vote)
+      get :edit, :id => suggestion_vote.id
+      assigns(:suggestion_vote).should eq(suggestion_vote)
     end
   end
 
@@ -64,18 +67,18 @@ describe SuggestionVotesController do
     describe "with valid params" do
       it "creates a new SuggestionVote" do
         expect {
-          post :create, :suggestion_vote => @valid_attributes
+          post :create, :suggestion_vote => valid_attributes
         }.to change(SuggestionVote, :count).by(1)
       end
 
       it "assigns a newly created suggestion_vote as @suggestion_vote" do
-        post :create, :suggestion_vote => @valid_attributes
+        post :create, :suggestion_vote => valid_attributes
         assigns(:suggestion_vote).should be_a(SuggestionVote)
         assigns(:suggestion_vote).should be_persisted
       end
 
       it "redirects to the created suggestion_vote" do
-        post :create, :suggestion_vote => @valid_attributes
+        post :create, :suggestion_vote => valid_attributes
         response.should redirect_to(SuggestionVote.last)
       end
     end
@@ -105,17 +108,17 @@ describe SuggestionVotesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         SuggestionVote.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => @suggestion_vote.id, :suggestion_vote => {'these' => 'params'}
+        put :update, :id => suggestion_vote.id, :suggestion_vote => {'these' => 'params'}
       end
 
       it "assigns the requested suggestion_vote as @suggestion_vote" do
-        put :update, :id => @suggestion_vote.id, :suggestion_vote => @valid_attributes
-        assigns(:suggestion_vote).should eq(@suggestion_vote)
+        put :update, :id => suggestion_vote.id, :suggestion_vote => valid_attributes
+        assigns(:suggestion_vote).should eq(suggestion_vote)
       end
 
       it "redirects to the suggestion_vote" do
-        put :update, :id => @suggestion_vote.id, :suggestion_vote => @valid_attributes
-        response.should redirect_to(@suggestion_vote)
+        put :update, :id => suggestion_vote.id, :suggestion_vote => @alid_attributes
+        response.should redirect_to(suggestion_vote)
       end
     end
 
@@ -123,14 +126,14 @@ describe SuggestionVotesController do
       it "assigns the suggestion_vote as @suggestion_vote" do
         # Trigger the behavior that occurs when invalid params are submitted
         SuggestionVote.any_instance.stub(:save).and_return(false)
-        put :update, :id => @suggestion_vote.id, :suggestion_vote => {}
-        assigns(:suggestion_vote).should eq(@suggestion_vote)
+        put :update, :id => suggestion_vote.id, :suggestion_vote => {}
+        assigns(:suggestion_vote).should eq(suggestion_vote)
       end
 
       it "re-renders the 'edit' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         SuggestionVote.any_instance.stub(:save).and_return(false)
-        put :update, :id => @suggestion_vote.id, :suggestion_vote => {}
+        put :update, :id => suggestion_vote.id, :suggestion_vote => {}
         response.should render_template("edit")
       end
     end
@@ -138,14 +141,14 @@ describe SuggestionVotesController do
 
   describe "DELETE destroy" do
     it "destroys the requested suggestion_vote" do
-      suggestion_vote = SuggestionVote.create! @valid_attributes
+      suggestion_vote = SuggestionVote.create! valid_attributes
       expect {
         delete :destroy, :id => suggestion_vote.id
       }.to change(SuggestionVote, :count).by(-1)
     end
 
     it "redirects to the suggestion_votes list" do
-      suggestion_vote = SuggestionVote.create! @valid_attributes
+      suggestion_vote = SuggestionVote.create! valid_attributes
       delete :destroy, :id => suggestion_vote.id
       response.should redirect_to(suggestion_votes_url)
     end
