@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
+    @radials = @project.radials
     @suggestions = @project.suggestions_ordered_by_vote_score.in_groups_of(8, false).first
     
     # New Suggestion for form

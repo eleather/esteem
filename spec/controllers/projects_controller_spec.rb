@@ -48,6 +48,19 @@ describe ProjectsController do
       assigns(:project).should eq(project)
     end
     
+    it 'assigns an empty array as @radials if the project has no radials' do
+      get :show, :id => project.id
+      assigns(:radials).should eq([])
+    end
+    
+    it 'assigns the project\'s radials as @radials' do
+      # Setup some radials for this project
+      radials = (1..3).map { Factory(:radial, :project => project) }
+      
+      get :show, :id => project.id
+      assigns(:radials).should eq(radials)
+    end
+    
     it 'assigns a new Suggestion as @suggestion' do
       get :show, :id => project.id
       assigns(:suggestion).should be_a_new(Suggestion)
