@@ -4,7 +4,6 @@
     %title= content_for?(:title) ? content_for(:title) : "Esteem"
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
-    = javascript_include_tag minify("raphael")
     = csrf_meta_tags
 
   %body
