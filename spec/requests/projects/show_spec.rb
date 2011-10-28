@@ -93,6 +93,8 @@ describe "projects/show.html.haml" do
     describe 'when the user has recently answered all questions for this project' do
       it 'should display text telling the user that they\'ve answered all the questions for now'
     end
+    
+    it 'should have a link to a view showing the trends of question responses aggregated by radial over time'
   end
   
   describe 'in #suggestions section' do
