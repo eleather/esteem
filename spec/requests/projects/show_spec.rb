@@ -5,11 +5,8 @@ describe "projects/show.html.haml" do
     Factory(:project)
   end
   
-  before(:each) do
-    visit project_path(project)
-  end
-  
   it 'should render the correct record attributes' do
+    visit project_path(project)
     page.should have_content(project.name)
     page.should have_content(project.slug)
     page.should have_content(project.description)
@@ -41,14 +38,14 @@ describe "projects/show.html.haml" do
   end
   
   describe 'in #suggestions section' do
-    before(:each) do
-      page.should have_selector('#suggestions')
-      @suggestions_div = page.find('#suggestions')
-    end
-    
     def check_for_new_suggestion_box
-      @suggestions_div.should have_selector('#new-suggestion')
-      @suggestions_div.find('#new-suggestion') do |div|
+      visit project_path(project)
+      
+      page.should have_selector('#suggestions')
+      suggestions_div = page.find('#suggestions')
+      
+      suggestions_div.should have_selector('#new-suggestion')
+      suggestions_div.find('#new-suggestion') do |div|
         div.should have_content('What\'s your suggestion?')
       end
     end
@@ -62,6 +59,7 @@ describe "projects/show.html.haml" do
       end
       
       it 'should have no other content' do
+        visit project_path(project)
         page.all('#suggestions > *').size.should eq(1)
       end
     end
