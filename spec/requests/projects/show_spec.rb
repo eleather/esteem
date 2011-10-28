@@ -21,23 +21,6 @@ describe "projects/show.html.haml" do
     it 'should have a link to a view showing the trends of question responses aggregated by radial over time'
   end
   
-  describe 'in #suggestions section'
-    describe 'when this project has no suggestions'
-      it 'should display the new suggestion box at the top of the section'
-      it 'should have no other content'
-    end
-    
-    describe 'when this project has less than 8 suggestions'
-      it 'should display the new suggestion box at the top of the section'
-      it 'should display all suggestions for this project, in most-voted order'
-    end
-
-    describe 'when this project has more than 8 suggestions'
-      it 'should display the new suggestion box at the top of the section'
-      it 'should display the 8 most recent suggestions for this project, in most-voted order'
-    end
-  end
-  
   describe 'in #questions section'
     describe 'when this project has no questions' do
       it 'should display text telling the user that there are no questions for this project'
@@ -53,6 +36,23 @@ describe "projects/show.html.haml" do
   
     describe 'when the user has recently answered all questions for this project' do
       it 'should display text telling the user that they\'ve answered all the questions for now'
+    end
+  end
+  
+  describe 'in #suggestions section'
+    describe 'when this project has no suggestions'
+      it 'should display the new suggestion box at the top of the section'
+      it 'should have no other content'
+    end
+    
+    describe 'when this project has less than 8 suggestions'
+      it 'should display the new suggestion box at the top of the section'
+      it 'should display all suggestions for this project, in most-voted order'
+    end
+
+    describe 'when this project has more than 8 suggestions'
+      it 'should display the new suggestion box at the top of the section'
+      it 'should display the 8 most recent suggestions for this project, in most-voted order'
     end
   end
 end
