@@ -8,7 +8,6 @@ describe 'suggestion_votes/index.html.haml' do
   
   before(:each) do
     visit suggestion_votes_path
-    save_and_open_page
   end
 
   it 'renders a list of suggestion_votes' do
