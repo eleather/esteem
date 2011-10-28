@@ -15,8 +15,15 @@ describe "projects/show.html.haml" do
   
   describe 'in #radials section' do    
     describe 'when this project has no radials' do
-      it 'should not have a link to the radials view' do
+      before(:each) do
         visit project_path(project)
+      end
+      
+      it 'should not display the section' do
+        page.should_not have_selector('#radials')
+      end
+      
+      it 'should not have a link to the radials view' do
         page.should_not have_link('Learn More', :href => radials_project_path(project))
       end
     end

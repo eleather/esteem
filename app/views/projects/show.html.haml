@@ -18,12 +18,12 @@
   \|
   = link_to 'Back', projects_path
 
-#radials
-  - if @radials.any?
-    = link_to 'Learn More', radials_project_path(@project)
-  #data
-    = render :partial => 'radials/radial_score', :collection => @radials, :as => :radial
-  #graph
+- if @radials.any?
+  #radials
+      = link_to 'Learn More', radials_project_path(@project)
+    #data
+      = render :partial => 'radials/radial_score', :collection => @radials, :as => :radial
+    #graph
   
 #questions
 
