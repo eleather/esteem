@@ -13,12 +13,7 @@ describe "projects/show.html.haml" do
     page.should have_link(project.organization.name, :href => organization_path(project.organization))
   end
   
-  describe 'in #radials section' do
-    let :radials do
-      project
-      (1..6).map { Factory(:radial, :project => project) }
-    end
-    
+  describe 'in #radials section' do    
     describe 'when this project has no radials' do
       it 'should not have a link to the radials view' do
         visit project_path(project)
@@ -27,6 +22,11 @@ describe "projects/show.html.haml" do
     end
     
     describe 'when this project has some radials' do
+      let :radials do
+        project
+        (1..6).map { Factory(:radial, :project => project) }
+      end
+      
       it 'should display recent question responses aggregated by radial' do
         # Set expectations.
         Project.should_receive(:find).and_return(project)
@@ -53,8 +53,8 @@ describe "projects/show.html.haml" do
       end
     
       it 'should have a link to a page giving more information about the radials for this project' do
-        # Add a radial to this project.
-        Factory(:radial, :project => project)
+        # Add some radials to this project.
+        radials
         
         # Visit the page.
         visit project_path(project)
