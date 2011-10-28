@@ -89,4 +89,16 @@ class ProjectsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  # GET /projects/1/radials
+  # GET /projects/1/radials.json
+  def radials
+    @project = Project.find(params[:id])
+    @radials = @project.radials
+    
+    respond_to do |format|
+      format.html # radials.html.haml
+      format.json { render json: @radials }
+    end
+  end
 end

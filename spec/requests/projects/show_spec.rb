@@ -19,33 +19,52 @@ describe "projects/show.html.haml" do
       (1..6).map { Factory(:radial, :project => project) }
     end
     
-    it 'should display recent question responses aggregated by radial' do
-      # Set expectations
-      Project.should_receive(:find).and_return(project)
-      project.should_receive(:radials).and_return(radials)
-      radials[0].should_receive(:score).twice.and_return(1.0)
-      radials[1].should_receive(:score).twice.and_return(2.0)
-      radials[2].should_receive(:score).twice.and_return(2.3)
-      radials[3].should_receive(:score).twice.and_return(3.0)
-      radials[4].should_receive(:score).twice.and_return(4.0)
-      radials[5].should_receive(:score).twice.and_return(5.0)
-      
-      # Visit page
-      visit project_path(project)
-      
-      # Check content
-      page.should have_selector('#radials')
-
-      radial_divs = page.all('#radials > #data > .radial')
-      radial_divs.size.should == radials.size
-      radial_divs.each_index do |i|
-        radial_divs[i].find('.name').text.strip.should eq(radials[i].name)
-        radial_divs[i].find('.score').text.strip.should eq(radials[i].score.to_s)
+    describe 'when this project has no radials' do
+      it 'should not have a link to the radials view' do
+        visit project_path(project)
+        page.should_not have_link('Learn More', :href => radials_project_path(project))
       end
     end
     
-    it 'should have a link to a page giving more information about the radials for this project'
-    it 'should have a link to a view showing the trends of question responses aggregated by radial over time'
+    describe 'when this project has some radials' do
+      it 'should display recent question responses aggregated by radial' do
+        # Set expectations.
+        Project.should_receive(:find).and_return(project)
+        project.should_receive(:radials).and_return(radials)
+        radials[0].should_receive(:score).twice.and_return(1.0)
+        radials[1].should_receive(:score).twice.and_return(2.0)
+        radials[2].should_receive(:score).twice.and_return(2.3)
+        radials[3].should_receive(:score).twice.and_return(3.0)
+        radials[4].should_receive(:score).twice.and_return(4.0)
+        radials[5].should_receive(:score).twice.and_return(5.0)
+      
+        # Visit the page.
+        visit project_path(project)
+      
+        # Check the content.
+        page.should have_selector('#radials')
+
+        radial_divs = page.all('#radials > #data > .radial-score')
+        radial_divs.size.should == radials.size
+        radial_divs.each_index do |i|
+          radial_divs[i].find('.name').text.strip.should eq(radials[i].name)
+          radial_divs[i].find('.score').text.strip.should eq(radials[i].score.to_s)
+        end
+      end
+    
+      it 'should have a link to a page giving more information about the radials for this project' do
+        # Add a radial to this project.
+        Factory(:radial, :project => project)
+        
+        # Visit the page.
+        visit project_path(project)
+        
+        # Check the content.
+        page.should have_link('Learn More', :href => radials_project_path(project))
+      end
+    
+      it 'should have a link to a view showing the trends of question responses aggregated by radial over time'
+    end
   end
   
   describe 'in #questions section' do

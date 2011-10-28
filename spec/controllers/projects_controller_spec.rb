@@ -204,5 +204,24 @@ describe ProjectsController do
       response.should redirect_to(projects_url)
     end
   end
+  
+  describe 'GET radials' do
+    it 'assigns the project as @project' do
+      put :radials, :id => project.id
+      assigns(:project).should eq(project)
+    end
+    
+    it 'assigns an empty array as @radials if the project has no radials' do
+      put :radials, :id => project.id
+      assigns(:radials).should eq([])
+    end
+    
+    it 'assigns the project\'s radials as @radials' do
+      radials = (1..6).map { Factory(:radial, :project => project) }
+      
+      put :radials, :id => project.id
+      assigns(:radials).should eq(radials)
+    end
+  end
 
 end

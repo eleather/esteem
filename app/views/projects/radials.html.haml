@@ -1,0 +1,5 @@
+- if @radials.empty?
+  This project has no radials configured.  For more information about radials see 
+  = link_to('this help page', radials_help_path) + '.'
+- else
+  = render :partial => 'radials/radial_description', :collection => @radials, :as => :radial

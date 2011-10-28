@@ -9,9 +9,15 @@ Esteem::Application.routes.draw do
 
   resources :suggestions
 
-  resources :projects
+  resources :projects do
+    member do
+      get 'radials'
+    end
+  end
 
   resources :organizations
+  
+  match 'help/radials' => 'help#radials', :as => 'radials_help', :via => :get
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
