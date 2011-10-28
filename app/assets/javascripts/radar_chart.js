@@ -1,52 +1,42 @@
 // A radar chart has a 
 RadarChart = function(_opts) {
   var opts = $.extend({
-    ele:     $("#radar-chart")[0], // DOM element where we will draw our radar chart
-    width:   500,                  // horizontal width of radar chart on page (in pixels)
-    height:  500,                  // vertical height of radar chart on page (in pixels)
-    maxVal:  5                     // maximum value a radial can take (same for all radials)
+    ele:    $("#radar-chart")[0], // DOM element where we will draw our radar chart
+    maxVal: 5, // maximum value a radial can take (same for all radials)
+    labels: ["Office", "Team", "Balance", "Company", "Career", "Impact"]
   }, _opts);
-  var ele     = opts.ele
-  var width   = opts.width;
-  var height  = opts.height;
-  var maxVal = opts.maxVal;
-  
-  // bind radar chart to specified DOM object
-  var paper = Raphael(ele, width, height);
-  
-  // given an array of integers as input, this method draws a radar chart based on that data
-  this.draw = function(data) {
-    var centerX = width/2,
-        centerY = height/2,
-        numRadials = data.length,
-        axisLength = width/2;
+  var ele    = opts.ele,
+      maxVal = opts.maxVal,
+      labels = opts.labels;
+
+  this.draw = function (values) {
+    var prepared_values = $.map(values, function(val, i) { return([[i, val]]); });
+    var prepared_labels = $.map(labels, function(lbl, i) { return({label: lbl}); });
+
+    var data = [{ 
+      data: prepared_values,
+      spider: {show: true, lineWidth: 12} 
+    }];
     
-    // draw radar chart axes and calculate location of vertices of the polygon
-    var vertices = [];
-    $.each(data, function(i, val) {
-      console.log("ITER: ", i);
-      var axis  = paper.path(centerTo(centerX, 0)),
-          degrees = (i/numRadials)*360;
-      axis.rotate(degrees, centerX, centerY); // rotate axis around end at center of canvas
-      var vertex = axis.getPointAtLength((val/maxVal)*axisLength); // -1 fudge factor since Raphael doesn't hand edge cases
-      vertex = paper.path(centerTo(vertex.x, vertex.y));
-      vertex.rotate(degrees, centerX, centerY);
-      vertex.glow();
-      vertices.push(vertex.getPointAtLength(0));
-    });
+    var options = { 
+      grid: { hoverable: true, clickable: true, tickColor: "rgba(0,0,0,0.2)", mode: "spider"},
+      series: { 
+        spider: { 
+          active: true,
+          highlight: {mode: "area"},
+          scaleMode: "static",
+          spiderSize: 0.9,
+          legs: { 
+            data: prepared_labels,
+            legScaleMin: 1,
+            legScaleMax: 1,
+            legMin: 0,
+            legMax: maxVal
+          }
+        }
+      }
+    };
     
-    // draw polygon
-    vertices.push(vertices[0]);
-    for (i = 0; i < vertices.length - 1; ++i) {
-      paper.path(joinPoints(vertices[i].x, vertices[i].y, vertices[i+1].x, vertices[i+1].y));
-    }
-    
-    function centerTo(x, y) {
-      return(joinPoints(centerX, centerY, x, y));
-    }
-    
-    function joinPoints(x1, y1, x2, y2) {
-      return("M"+x1+","+y1+"L"+x2+","+y2);
-    }
+    $.plot(ele, data, options);
   }
 }

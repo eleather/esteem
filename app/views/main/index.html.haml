@@ -1,9 +1,8 @@
 %h1 Welcome to Esteem!
 
-#radar-chart{:style => "margin: 50px;"}
+/ #radar-chart{:style => "margin: 50px;"}
+#radar-chart{:style => "width: 700px; height: 500px; float: left; border: 1px dashed gainsboro;"}
 
 :javascript
-  jQuery(function () {
-    var chart = new RadarChart();
-    chart.draw([4, 5, 5, 5, 5, 5]);
-  });
+  var chart = new RadarChart();
+  chart.draw([5, 4, 3, 2, 1, 0]);
