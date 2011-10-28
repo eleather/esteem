@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @radial.name
+%p
+  %b Description:
+  = @radial.description
+%p
+  %b Project:
+  = @radial.project_id
+
+= link_to 'Edit', edit_radial_path(@radial)
+\|
+= link_to 'Back', radials_path

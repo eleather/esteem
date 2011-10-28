@@ -1,0 +1,19 @@
+= form_for @radial do |f|
+  -if @radial.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@radial.errors.count, "error")} prohibited this radial from being saved:"
+      %ul
+        - @radial.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :description
+    = f.text_area :description
+  .field
+    = f.label :project_id
+    = f.number_field :project_id
+  .actions
+    = f.submit 'Save'

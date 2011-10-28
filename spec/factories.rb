@@ -30,7 +30,7 @@ Factory.define(:project) do |project|
   project.sequence(:slug) { |n| "project-slug-#{n}"}
   project.sequence(:description) { |n| "Project Description #{n}"}
   
-  # Setup associations.
+  # Setup associations
   project.organization
 end
 
@@ -47,13 +47,24 @@ Factory.define(:project_with_questions_and_suggestions, :parent => :project) do 
 end
 
 
+### Radial Factories ###
+
+Factory.define(:radial) do |radial|
+  radial.sequence(:name) { |n| "Radial Name #{n}" }
+  radial.sequence(:description) { |n| "Radial Description #{n}"}
+  
+  # Setup associations
+  radial.project
+end
+
+
 ### Question Factories ###
 
 Factory.define(:question) do |question|
   question.sequence(:title) { |n| "Question Title #{n}" }
   question.sequence(:description) { |n| "Question Description #{n}" }
   
-  # Setup associations.
+  # Setup associations
   question.project
 end
 
@@ -70,7 +81,7 @@ end
 Factory.define(:question_response) do |question_response|
   question_response.response rand(4) + 1
   
-  # Setup associations.
+  # Setup associations
   question_response.question
   question_response.user
 end
@@ -82,7 +93,7 @@ Factory.define(:suggestion) do |suggestion|
   suggestion.sequence(:title) { |n| "Suggestion Title #{n}" }
   suggestion.sequence(:description) { |n| "Suggestion Description #{n}" }
   
-  # Setup assocations.
+  # Setup assocations
   suggestion.project
   suggestion.user
 end

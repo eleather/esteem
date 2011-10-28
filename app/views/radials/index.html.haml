@@ -1,0 +1,23 @@
+%h1 Listing radials
+
+%table
+  %tr
+    %th Name
+    %th Description
+    %th Project
+    %th
+    %th
+    %th
+
+  - @radials.each do |radial|
+    %tr
+      %td= radial.name
+      %td= radial.description
+      %td= radial.project_id
+      %td= link_to 'Show', radial
+      %td= link_to 'Edit', edit_radial_path(radial)
+      %td= link_to 'Destroy', radial, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Radial', new_radial_path
