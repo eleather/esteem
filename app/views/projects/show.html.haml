@@ -20,12 +20,13 @@
 
 - if @radials.any?
   #radials
-      = link_to 'Learn More', radials_project_path(@project)
+    = link_to 'Learn More', radials_project_path(@project)
     #data
       = render :partial => 'radials/radial_score', :collection => @radials, :as => :radial
     #graph
-  
-#questions
+ 
+- if @questions.any? 
+  #questions
 
 #suggestions
   = render :partial => 'suggestions/new'

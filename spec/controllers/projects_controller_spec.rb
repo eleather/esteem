@@ -61,6 +61,19 @@ describe ProjectsController do
       assigns(:radials).should eq(radials)
     end
     
+    it 'assigns an empty array as @questions if the project has no questions' do
+      get :show, :id => project.id
+      assigns(:questions).should eq([])
+    end
+    
+    it 'assigns the project\'s questions as @questions' do
+      # Setup some questions for this project
+      questions = (1..3).map { Factory(:question, :project => project) }
+      
+      get :show, :id => project.id
+      assigns(:questions).should eq(questions)
+    end
+    
     it 'assigns a new Suggestion as @suggestion' do
       get :show, :id => project.id
       assigns(:suggestion).should be_a_new(Suggestion)

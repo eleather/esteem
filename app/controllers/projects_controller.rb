@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @radials = @project.radials
+    @questions = @project.questions
     @suggestions = @project.suggestions_ordered_by_vote_score.in_groups_of(8, false).first || []
     
     # New Suggestion for form

@@ -76,7 +76,10 @@ describe "projects/show.html.haml" do
   
   describe 'in #questions section' do
     describe 'when this project has no questions' do
-      it 'should display text telling the user that there are no questions for this project'
+      it 'should not display the section' do
+        visit project_path(project)
+        page.should_not have_selector('#questions')
+      end
     end
   
     describe 'when the user has recently answered no questions for this project' do
