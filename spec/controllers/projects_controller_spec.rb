@@ -64,6 +64,15 @@ describe ProjectsController do
       get :show, :id => project.id
       assigns(:suggestions).should eq(suggestions)
     end
+    
+    it 'doesn\'t have more than 8 entries in @suggestions' do
+      suggestions = (1..10).map { Factory(:suggestion, :project => project) }
+      Project.should_receive(:find).with(project.id.to_s).and_return(project)
+      project.should_receive(:suggestions_ordered_by_vote_score).and_return(suggestions)
+      
+      get :show, :id => project.id
+      assigns(:suggestions).size.should eq(8)
+    end 
   end
 
   describe "GET new" do

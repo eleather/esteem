@@ -94,11 +94,35 @@ describe "projects/show.html.haml" do
     end
 
     describe 'when this project has more than 8 suggestions' do
+      let :suggestions do
+        project
+        (1..10).map { Factory(:suggestion, :project => project) }
+      end
+      
       it 'should display the new suggestion box at the top of the section' do
         check_for_new_suggestion_box
       end
       
-      it 'should display the 8 most recent suggestions for this project, in most-voted order'
+      it 'should display the 8 most recent suggestions for this project, in most-voted order' do
+        Project.should_receive(:find).and_return(project)
+        project.should_receive(:suggestions).and_return(suggestions)
+        suggestions[0].should_receive(:vote_score).twice.and_return(0)
+        suggestions[1].should_receive(:vote_score).twice.and_return(1)
+        suggestions[2].should_receive(:vote_score).twice.and_return(2)
+        suggestions[3].should_receive(:vote_score).twice.and_return(3)
+        suggestions[4].should_receive(:vote_score).twice.and_return(4)
+        suggestions[5].should_receive(:vote_score).twice.and_return(-1)
+        suggestions[6].should_receive(:vote_score).twice.and_return(-2)
+        suggestions[7].should_receive(:vote_score).twice.and_return(-2)
+        suggestions[8].should_receive(:vote_score).and_return(-3)
+        suggestions[9].should_receive(:vote_score).and_return(-4)
+        
+        visit project_path(project)
+        
+        suggestion_divs = page.all('#suggestions > .suggestion')
+        suggestion_divs.size.should == 8
+        suggestion_divs.map { |d| d.find('.title').text.strip }.should == [suggestions[4].title, suggestions[3].title, suggestions[2].title, suggestions[1].title, suggestions[0].title, suggestions[5].title, suggestions[6].title, suggestions[7].title]
+      end
     end
   end
 end
