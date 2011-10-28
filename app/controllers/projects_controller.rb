@@ -14,6 +14,9 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
+    
+    # New Suggestion for form
+    @suggestion = Suggestion.new
 
     respond_to do |format|
       format.html # show.html.erb
