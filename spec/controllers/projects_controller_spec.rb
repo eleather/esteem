@@ -66,6 +66,11 @@ describe ProjectsController do
       assigns(:suggestion).should be_a_new(Suggestion)
     end
     
+    it 'assigns an empty array as @suggestions if the projec thas no suggestions' do
+      get :show, :id => project.id
+      assigns(:suggestions).should eq([])
+    end
+    
     it 'assigns the project\'s suggestions in sorted order by vote_score as @suggestions' do
       suggestion1 = Factory(:suggestion, :project => project)
       suggestion2 = Factory(:suggestion, :project => project)
