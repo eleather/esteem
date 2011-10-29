@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'projects/index.html.haml' do  
   before(:each) do
+    login_user
     visit projects_path
   end
   

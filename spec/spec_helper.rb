@@ -36,3 +36,14 @@ end
 
 # Clear the database so factory girl's sequence function doesn't have issues.
 `rake db:test:prepare`
+
+# Helper method for request specs - I can't get it to load correctly with a 
+# config.include right now.
+def login_user
+  @current_user = Factory(:user)
+  visit new_user_session_url
+  fill_in 'user_email', :with => @current_user.email
+  fill_in 'user_password', :with => @current_user.password
+  click_button 'Sign in'
+end
+

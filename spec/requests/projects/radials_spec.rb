@@ -4,6 +4,10 @@ describe 'projects/radials.html.haml' do
   let :project do
     Factory(:project)
   end
+  
+  before(:each) do
+    login_user
+  end
 
   describe 'when project has no radials' do
     before(:each) do

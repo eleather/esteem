@@ -1,13 +1,5 @@
 require 'spec_helper'
 
-def login_user
-  @current_user = Factory(:user)
-  visit new_user_session_url
-  fill_in 'user_email', :with => @current_user.email
-  fill_in 'user_password', :with => @current_user.password
-  click_button 'Sign in'
-end
-
 describe "projects/show.html.haml" do  
   let :project do
     Factory(:project)
