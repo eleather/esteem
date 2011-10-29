@@ -27,6 +27,9 @@
  
 - if @questions.any? 
   #questions
+    = form_tag(answer_questions_project_path(@project)) do
+      = render :partial => 'questions/ask', :collection => @questions, :as => :question
+      = submit_tag 'Done!'
 
 #suggestions
   = render :partial => 'suggestions/new'

@@ -1,8 +1,20 @@
 require 'spec_helper'
 
-describe "projects/show.html.haml" do
+def login_user
+  @current_user = Factory(:user)
+  visit new_user_session_url
+  fill_in 'user_email', :with => @current_user.email
+  fill_in 'user_password', :with => @current_user.password
+  click_button 'Sign in'
+end
+
+describe "projects/show.html.haml" do  
   let :project do
     Factory(:project)
+  end
+  
+  before(:each) do
+    login_user
   end
   
   it 'should render the correct record attributes' do
@@ -53,9 +65,9 @@ describe "projects/show.html.haml" do
 
         radial_divs = page.all('#radials > #data > .radial-score')
         radial_divs.size.should == radials.size
-        radial_divs.each_index do |i|
-          radial_divs[i].find('.name').text.strip.should eq(radials[i].name)
-          radial_divs[i].find('.score').text.strip.should eq(radials[i].score.to_s)
+        radials.each_index do |i|
+          radial_divs[i].should have_content(radials[i].name)
+          radial_divs[i].should have_content(radials[i].score.to_s)
         end
       end
     
@@ -74,7 +86,12 @@ describe "projects/show.html.haml" do
     end
   end
   
-  describe 'in #questions section' do
+  describe 'in #questions section' do    
+    let :questions do
+      project
+      (1..10).map { Factory(:question, :project => project) }
+    end
+    
     describe 'when this project has no questions' do
       it 'should not display the section' do
         visit project_path(project)
@@ -82,12 +99,24 @@ describe "projects/show.html.haml" do
       end
     end
   
-    describe 'when the user has recently answered no questions for this project' do
-      it 'should display all questions for the user to answer'
-    end
-  
-    describe 'when the user has recently answered only some questions for this project' do
-      it 'should display only unanswered questions for the user to answer'
+    describe 'when the user has questions left to answer for this project' do
+      it 'should display questions for the user to answer' do
+        # Set expectations.
+        Project.should_receive(:find).and_return(project)
+        project.should_receive(:get_unanswered_questions_for_user).and_return(questions)
+        
+        # Visit the page.
+        visit project_path(project)
+        
+        # Check the content.
+        question_divs = page.all('.question-ask')
+        question_divs.size.should eq(project.questions.size)
+        questions.each_index do |i|
+          question_divs[i].should have_content(questions[i].title)
+          question_divs[i].should have_content(questions[i].description)
+          question_divs[i].should have_selector('input', :type => 'radio')
+        end
+      end
     end
   
     describe 'when the user has recently answered all questions for this project' do

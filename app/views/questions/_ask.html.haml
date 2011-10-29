@@ -1,0 +1,14 @@
+.question-ask
+  .title
+    = question.title
+  .description
+    = question.description
+  .field
+    %table
+      %th
+        - 1.upto(5) do |i|
+          %td= i
+      %tr
+        - 1.upto(5) do |i|
+          %td= radio_button_tag "question[#{question.id}]", i, false, :index => question.id
+      

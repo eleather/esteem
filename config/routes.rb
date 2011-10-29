@@ -12,6 +12,7 @@ Esteem::Application.routes.draw do
   resources :projects do
     member do
       get 'radials'
+      post 'answer_questions'
     end
   end
 

@@ -5,6 +5,52 @@ describe Project do
     Factory(:project)
   end
   
+  let :questions do
+    project
+    (1..6).map { Factory(:question, :project => project) }
+  end
+  
+  let :user do
+    Factory(:user)
+  end
+  
+  describe '.get_unanswered_questions_for_user' do
+    describe 'when project has no questions' do
+      it 'should not error' do
+        lambda { project.get_unanswered_questions_for_user(user) }.should_not raise_error
+      end
+      
+      it 'should return an empty array' do
+        project.get_unanswered_questions_for_user(user).should eq([])
+      end
+    end
+    
+    describe 'when user has answered no questions recently for this project' do
+      it 'should return all questions for this project' do
+        questions
+        QuestionResponse.should_receive(:where).with(:user_id => user.id).and_return([])
+        project.get_unanswered_questions_for_user(user).should eq(questions)
+      end
+    end
+    
+    describe 'when user has answered some questions recently for this project' do
+      it 'should return only the questions the user hasn\'t answered recently' do
+        questions
+        QuestionResponse.should_receive(:where).with(:user_id => user.id).and_return(questions[0..1])
+        project.get_unanswered_questions_for_user(user).should eq(questions[2..questions.size])
+      end
+    end
+    
+    describe 'when user has answered all questions recently for this project' do
+      it 'should return an empty array' do
+        questions
+        QuestionResponse.should_receive(:where).with(:user_id => user.id).and_return(questions)
+        project.get_unanswered_questions_for_user(user).should eq([])
+      end
+    end
+  end
+  
+  
   describe '.suggestions_ordered_by_vote_score' do
     describe 'when Project has no Suggestions' do
       it 'should not error' do
