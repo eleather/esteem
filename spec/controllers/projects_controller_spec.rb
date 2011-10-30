@@ -35,6 +35,10 @@ describe ProjectsController do
     }
   end
   
+  let :user do
+    Factory(:user)
+  end
+  
   describe 'when user is not logged in' do
     describe 'GET index' do
       it 'redirects the user to the login screen' do
@@ -74,48 +78,18 @@ describe ProjectsController do
         assigns(:radials).should eq(radials)
       end
     
-      it 'assigns an empty array as @questions if the project has no questions' do
+      it 'assigns unanswered questions for the logged in user for this project as @questions' do
+        # Setup some questions for this project.
+        questions = (1..3).map { Factory(:question, :project => project) }
+        
+        # Setup expectations.
+        Project.should_receive(:find).with(project.id.to_s).and_return(project)
+        project.should_receive(:get_unanswered_questions_for_user).with(user).and_return(questions)
+        
+        # Check result.
         get :show, :id => project.id
-        assigns(:questions).should eq([])
+        assigns(:questions).should eq(questions)
       end
-    
-      it 'assigns an empty array as @questions if the current user has recently answered all questions for this project'
-    
-      # it 'assigns the project\'s questions as @questions' do
-      #   # Setup some questions for this project
-      #   questions = (1..3).map { Factory(:question, :project => project) }
-      #   
-      #   get :show, :id => project.id
-      #   assigns(:questions).should eq(questions)
-      # end
-      # 
-      # describe 'when the user has recently answered no questions for this project' do
-      #   it 'should display all questions for the user to answer' do
-      #     # Set expectations.
-      #     Project.should_receive(:find).and_return(project)
-      #     project.should_receive(:get_unanswered_questions_for_user).and_return(questions)
-      #     
-      #     # Visit the page.
-      #     visit project_path(project)
-      #     
-      #     # Check the content.
-      #     question_divs = page.all('.question')
-      #     question_divs.size.should eq(project.questions.size)
-      #     questions.each_index do |i|
-      #       question_divs[i].should have_content(questions[i].title)
-      #       question_divs[i].should have_content(questions[i].description)
-      #       question_divs[i].should have_field('input', :type => 'radio')
-      #     end
-      #   end
-      # end
-      #   
-      # describe 'when the user has recently answered only some questions for this project' do
-      #   it 'should display only unanswered questions for the user to answer'
-      # end
-      #   
-      # describe 'when the user has recently answered all questions for this project' do
-      #   it 'should display text telling the user that they\'ve answered all the questions for now'
-      # end
     
       it 'assigns a new Suggestion as @suggestion' do
         get :show, :id => project.id
