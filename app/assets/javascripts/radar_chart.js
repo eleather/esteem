@@ -2,8 +2,7 @@
 RadarChart = function(_opts) {
   var opts = $.extend({
     ele:    $("#radar-chart")[0], // DOM element where we will draw our radar chart
-    maxVal: 5, // maximum value a radial can take (same for all radials)
-    labels: ["Office", "Team", "Balance", "Company", "Career", "Impact"]
+    maxVal: 5 // maximum value a radial can take (same for all radials)
   }, _opts);
   var ele    = opts.ele,
       maxVal = opts.maxVal,

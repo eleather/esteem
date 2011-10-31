@@ -23,7 +23,7 @@ describe "projects/show.html.haml" do
         visit project_path(project)
       end
       
-      it 'should not display the section' do
+      it 'should not display the #radials section' do
         page.should_not have_selector('#radials')
       end
       
@@ -38,29 +38,52 @@ describe "projects/show.html.haml" do
         (1..6).map { Factory(:radial, :project => project) }
       end
       
+      it 'should display the #radials section' do
+        radials
+        visit project_path(project)
+        page.should have_selector('#radials')
+      end
+      
       it 'should display recent question responses aggregated by radial' do
         # Set expectations.
         Project.should_receive(:find).and_return(project)
         project.should_receive(:radials).and_return(radials)
-        radials[0].should_receive(:score).twice.and_return(1.0)
-        radials[1].should_receive(:score).twice.and_return(2.0)
-        radials[2].should_receive(:score).twice.and_return(2.3)
-        radials[3].should_receive(:score).twice.and_return(3.0)
-        radials[4].should_receive(:score).twice.and_return(4.0)
-        radials[5].should_receive(:score).twice.and_return(5.0)
+        radials[0].should_receive(:score).exactly(3).times.and_return(1.0)
+        radials[1].should_receive(:score).exactly(3).times.and_return(2.0)
+        radials[2].should_receive(:score).exactly(3).times.and_return(2.3)
+        radials[3].should_receive(:score).exactly(3).times.and_return(3.0)
+        radials[4].should_receive(:score).exactly(3).times.and_return(4.0)
+        radials[5].should_receive(:score).exactly(3).times.and_return(5.0)
       
         # Visit the page.
         visit project_path(project)
       
         # Check the content.
-        page.should have_selector('#radials')
-
         radial_divs = page.all('#radials > #data > .radial-score')
         radial_divs.size.should == radials.size
         radials.each_index do |i|
           radial_divs[i].should have_content(radials[i].name)
           radial_divs[i].should have_content(radials[i].score.to_s)
         end
+      end
+      
+      it 'should setup a javascript graph of the radial scores' do
+        # Set expectations.
+        Project.should_receive(:find).and_return(project)
+        project.should_receive(:radials).and_return(radials)
+        radials[0].should_receive(:score).exactly(2).times.and_return(1.0)
+        radials[1].should_receive(:score).exactly(2).times.and_return(2.0)
+        radials[2].should_receive(:score).exactly(2).times.and_return(2.3)
+        radials[3].should_receive(:score).exactly(2).times.and_return(3.0)
+        radials[4].should_receive(:score).exactly(2).times.and_return(4.0)
+        radials[5].should_receive(:score).exactly(2).times.and_return(5.0)
+        
+        # Visit the page.
+        visit project_path(project)
+        
+        # Check the content.
+        page.should have_selector('#radials > #graph > #radar-chart')
+        page.find('#radials > #graph').should have_content('var chart = new RadarChart();')
       end
     
       it 'should have a link to a page giving more information about the radials for this project' do

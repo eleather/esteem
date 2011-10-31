@@ -39,6 +39,12 @@ describe ProjectsController do
     Factory(:user)
   end
   
+  let :radials do
+    project
+    radials = (1..3).map { Factory(:radial, :project => project) }
+  end
+  
+  
   describe 'when user is not logged in' do
     describe 'GET index' do
       it 'redirects the user to the login screen' do
@@ -71,11 +77,20 @@ describe ProjectsController do
       end
     
       it 'assigns the project\'s radials as @radials' do
-        # Setup some radials for this project
-        radials = (1..3).map { Factory(:radial, :project => project) }
-      
+        radials
         get :show, :id => project.id
         assigns(:radials).should eq(radials)
+      end
+      
+      it 'assigns an empty array as @radial_score_map if the project has no radials' do
+        get :show, :id => project.id
+        assigns(:radial_score_map).should eq([])
+      end
+      
+      it 'assigns tuples of the project\'s radial names and rounded scores as @radial_score_map' do
+        radials
+        get :show, :id => project.id
+        assigns(:radial_score_map).should eq(radials.map { |r| [r.name, r.score] })
       end
     
       it 'assigns unanswered questions for the logged in user for this project as @questions' do

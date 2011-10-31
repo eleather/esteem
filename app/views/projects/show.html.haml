@@ -24,6 +24,11 @@
     #data
       = render :partial => 'radials/radial_score', :collection => @radials, :as => :radial
     #graph
+      #radar-chart{:style => "width: 700px; height: 500px; float: left; border: 1px dashed gainsboro;"}
+      :javascript
+        var chart = new RadarChart({labels: #{@radial_score_map.map(&:first).inspect}});
+        chart.draw(#{@radial_score_map.map(&:last).inspect});
+    
  
 - if @questions.any? 
   #questions
