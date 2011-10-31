@@ -56,6 +56,19 @@
  
 @mixin margined
   margin: $margin-increment
+  
+@mixin margined-vertical
+  margin:
+    top: $margin-increment
+    bottom: $margin-increment
+  
+@mixin margined-double
+  margin: 2 * $margin-increment
+  
+@mixin margined-double-vertical
+  margin:
+    top: 2 * $margin-increment
+    bottom: 2 * $margin-increment
  
 @mixin padded
   padding: $padding-increment

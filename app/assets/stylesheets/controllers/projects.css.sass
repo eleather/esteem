@@ -7,9 +7,13 @@
 .projects-controller
   &#show-template
     #project-header
+      @include margined-double-vertical
+    
       #name
         @include title
+        @include margined-vertical
       #description
+        @include margined-vertical
   
     #radials
       float: left
