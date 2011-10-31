@@ -1,5 +1,7 @@
 #header-partial.layouts
-  #user-management
+  #logo
+    = link_to 'Esteem', root_path
+  #session-management
     - if user_signed_in?
       = link_to current_user.email, edit_user_registration_path
       | 
@@ -8,6 +10,4 @@
       = link_to 'Sign up', new_user_registration_path
       or
       = link_to 'Log in', new_user_session_path
-  
-  
   
