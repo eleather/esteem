@@ -100,4 +100,13 @@
   font: 
     size: 1.1em
     weight: bold
+    
+    
+/*
+ * Basic page section mixins.
+ */
 
+@mixin page-section
+  .section-title
+    @include sub-title
+    @include margined-vertical
