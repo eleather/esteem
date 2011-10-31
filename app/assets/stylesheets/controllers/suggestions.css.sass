@@ -6,12 +6,20 @@
 
 .suggestions-controller
   &.suggestion-partial
+    @include group
     @include round-corners
     @include border
     @include padded-double
     background: $sand
   
-    .vote-score
+    .votes
+      float: left
+      margin-right: $margin-increment
+        
+      .vote-score
+        @include sub-title
+        margin-left: 2px
+        
     .title
       @include sub-title
       
