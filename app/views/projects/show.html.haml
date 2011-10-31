@@ -1,23 +1,9 @@
 #show-template.projects-controller
-  #scaffold-deprecated
-    %p#notice= notice
-
+  #project-header
     %p
-      %b Name:
       = @project.name
     %p
-      %b Slug:
-      = @project.slug
-    %p
-      %b Description:
       = @project.description
-    %p
-      %b Organization:
-      = link_to @project.organization.name, @project.organization
-
-    = link_to 'Edit', edit_project_path(@project)
-    \|
-    = link_to 'Back', projects_path
 
   - if @radials.any?
     #radials

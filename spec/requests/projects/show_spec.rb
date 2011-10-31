@@ -12,9 +12,7 @@ describe "projects/show.html.haml" do
   it 'should render the correct record attributes' do
     visit project_path(project)
     page.should have_content(project.name)
-    page.should have_content(project.slug)
     page.should have_content(project.description)
-    page.should have_link(project.organization.name, :href => organization_path(project.organization))
   end
   
   describe 'in #radials section' do    
@@ -83,7 +81,7 @@ describe "projects/show.html.haml" do
         
         # Check the content.
         page.should have_selector('#radials > #graph > #radar-chart')
-        page.find('#radials > #graph').should have_content('var chart = new RadarChart();')
+        page.find('#radials > #graph').should have_content("var chart = new RadarChart({labels: #{radials.map(&:name).inspect}});")
       end
     
       it 'should have a link to a page giving more information about the radials for this project' do
