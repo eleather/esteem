@@ -1,7 +1,17 @@
-%h1 Editing project
+#edit-template.projects-controller
+  = render_breadcrumbs
 
-= render 'form'
-
-= link_to 'Show', @project
-\|
-= link_to 'Back', projects_path
+  #project-details
+    .section-title 
+      Project Details
+    = render 'form'
+    
+  #radials
+    .section-title
+      Radials
+    = render :partial => 'radials/radial_description', :collection => @radials, :as => :radial
+    = link_to 'Add Radial', new_radial_path(:project_id => @project.id)
+  
+  #questions
+    .section-title
+      Questions

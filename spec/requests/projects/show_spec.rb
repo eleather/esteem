@@ -62,7 +62,7 @@ describe "projects/show.html.haml" do
         visit project_path(project)
       
         # Check the content.
-        radial_divs = page.all('#radials > #data > .radial-score')
+        radial_divs = page.all('#radials > #data > .radial-score-partial')
         radial_divs.size.should == radials.size
         radials.each_index do |i|
           radial_divs[i].should have_content(radials[i].name)

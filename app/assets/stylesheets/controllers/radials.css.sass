@@ -5,7 +5,12 @@
 @import 'global.css.sass'
 
 .radials-controller
-  &.radial-score
+  &.radial-description-partial
+    @include margined-vertical
+    .name
+      @include sub-sub-title
+
+  &.radial-score-partial
     @include margined
     float: left
     
