@@ -74,9 +74,9 @@ describe SuggestionsController do
         assigns(:suggestion).should be_persisted
       end
 
-      it "redirects to the created suggestion" do
+      it "redirects back to the page the suggestion was created from" do
         post :create, :suggestion => @valid_attributes
-        response.should redirect_to(Suggestion.last)
+        response.should redirect_to(Suggestion.last.project)
       end
     end
 

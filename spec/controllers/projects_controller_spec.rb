@@ -106,12 +106,14 @@ describe ProjectsController do
         assigns(:questions).should eq(questions)
       end
     
-      it 'assigns a new Suggestion as @suggestion' do
+      it 'assigns a new Suggestion with project_id and user_id set as @suggestion' do
         get :show, :id => project.id
         assigns(:suggestion).should be_a_new(Suggestion)
+        assigns(:suggestion).project_id.should eq(project.id)
+        assigns(:suggestion).user_id.should eq(user.id)
       end
     
-      it 'assigns an empty array as @suggestions if the projec thas no suggestions' do
+      it 'assigns an empty array as @suggestions if the project has no suggestions' do
         get :show, :id => project.id
         assigns(:suggestions).should eq([])
       end
@@ -139,17 +141,16 @@ describe ProjectsController do
     end
 
     describe "GET new" do
-      it 'raises an error if no organization_id was given' do
+      it 'raises an error if no organization_id was given'
         # get :new
         # TODO: Don't know correct syntax for this test.  Try again later.
         # response.should raise_error(RuntimeError.new('You cannot create a new project without passing an organization_id parameter.'))
-      end
+
     
-      it 'assigns a new project as @project, associated with organization_id' do
-        get :new, :organization_id => 123
+      it 'assigns a new project as @project, associated with organization_id'
+        # get :new, :organization_id => 123
         # TODO: Equality isn't working, not sure why.  Try again later.
         # assigns(:project).should eq(Project.new(:organization_id => 123))
-      end
     end
 
     describe "GET edit" do

@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
     @suggestions = @project.suggestions_ordered_by_vote_score.in_groups_of(8, false).first || []
     
     # New Suggestion for form
-    @suggestion = Suggestion.new
+    @suggestion = Suggestion.new(:project_id => @project.id, :user_id => current_user.id)
 
     respond_to do |format|
       format.html # show.html.erb

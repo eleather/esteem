@@ -6,6 +6,8 @@
         - @suggestion.errors.full_messages.each do |msg|
           %li= msg
 
+  = f.hidden_field :project_id
+  = f.hidden_field :user_id
   .field
     = f.text_field :title
   .field
