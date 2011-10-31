@@ -15,6 +15,11 @@ describe "projects/show.html.haml" do
     page.should have_content(project.description)
   end
   
+  it 'should have an edit link' do
+    visit project_path(project)
+    page.should have_link('Edit', :href => edit_project_path(project))
+  end
+  
   describe 'in #radials section' do    
     describe 'when this project has no radials' do
       before(:each) do
@@ -146,8 +151,8 @@ describe "projects/show.html.haml" do
       page.should have_selector('#suggestions')
       suggestions_div = page.find('#suggestions')
       
-      suggestions_div.should have_selector('#new-suggestion')
-      suggestions_div.find('#new-suggestion') do |div|
+      suggestions_div.should have_selector('#new-suggestion-partial')
+      suggestions_div.find('#new-suggestion-partial') do |div|
         div.should have_content('What\'s your suggestion?')
       end
     end
@@ -187,7 +192,7 @@ describe "projects/show.html.haml" do
         
         visit project_path(project)
         
-        suggestion_divs = page.all('#suggestions > .suggestion')
+        suggestion_divs = page.all('#suggestions > .suggestion-partial')
         suggestion_divs.size.should == suggestions.size
         suggestion_divs.map { |d| d.find('.title').text.strip }.should == [suggestions[2].title, suggestions[1].title, suggestions[0].title, suggestions[3].title, suggestions[4].title]
       end
@@ -219,7 +224,7 @@ describe "projects/show.html.haml" do
         
         visit project_path(project)
         
-        suggestion_divs = page.all('#suggestions > .suggestion')
+        suggestion_divs = page.all('#suggestions > .suggestion-partial')
         suggestion_divs.size.should == 8
         suggestion_divs.map { |d| d.find('.title').text.strip }.should == [suggestions[4].title, suggestions[3].title, suggestions[2].title, suggestions[1].title, suggestions[0].title, suggestions[5].title, suggestions[6].title, suggestions[7].title]
       end

@@ -2,6 +2,10 @@
   #project-header
     #name
       = @project.name
+    #edit-link
+      [
+      = link_to 'Edit', edit_project_path(@project)
+      ]
     #description
       = @project.description
 
