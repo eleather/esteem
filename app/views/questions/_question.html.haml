@@ -2,6 +2,6 @@
   .title
     = question.title
   .radials
-    = question.radials.map(&:name)
+    = question.radials.map(&:name).to_sentence
   .description
     = question.description
