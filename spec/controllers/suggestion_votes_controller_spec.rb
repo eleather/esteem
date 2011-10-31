@@ -77,9 +77,9 @@ describe SuggestionVotesController do
         assigns(:suggestion_vote).should be_persisted
       end
 
-      it "redirects to the created suggestion_vote" do
+      it "redirects to the suggestion's project" do
         post :create, :suggestion_vote => valid_attributes
-        response.should redirect_to(SuggestionVote.last)
+        response.should redirect_to(SuggestionVote.last.suggestion.project)
       end
     end
 

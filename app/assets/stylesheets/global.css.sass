@@ -1,13 +1,21 @@
 /*
  * Constants
  */
- 
+
+// Colors 
 $dark-blue: #003366
 $light-blue: #005EBD
 $teal: #00B3B3
+$sand: #FEE8D6
 
+// Borders
 $border-width: 1px
 $border-radius: 5px
+
+// Spacing
+$spacing-increment: 5px
+$padding-increment: $spacing-increment
+
 
 /*
  * Clearfix hack from http://css-tricks.com/snippets/css/clear-fix/
@@ -40,6 +48,17 @@ $border-radius: 5px
 /*
  * Mixins for backgrounds.
  */
+  
+
+/* 
+ * Mixins for spacing.
+ */
+ 
+@mixin padded
+  padding: $padding-increment
+  
+@mixin padded-double
+  padding: 2 * $padding-increment
  
 
 /*
@@ -49,5 +68,10 @@ $border-radius: 5px
 @mixin title
   font:
     size: 1.5em
+    weight: bold
+    
+@mixin sub-title
+  font: 
+    size: 1.2em
     weight: bold
 

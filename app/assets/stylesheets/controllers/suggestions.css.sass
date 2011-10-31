@@ -5,22 +5,35 @@
 @import 'global.css.sass'
 
 .suggestions-controller
+  &.suggestion-partial
+    @include round-corners
+    @include border
+    @include padded-double
+    background: $sand
+  
+    .vote-score
+    .title
+      @include sub-title
+      
+    .description
+
   &#new-suggestion-partial
     @include round-corners
     @include border
+    @include padded-double
     background: $teal
-    padding: 10px
-    
+  
     #text
+      @include sub-title
       margin: 5px
-      
+    
     .field
       input
         @include round-corners
         @include border
         width: 100%
         height: 20px
-    
+  
       textarea
         @include round-corners
         @include border

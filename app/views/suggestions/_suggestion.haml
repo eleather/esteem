@@ -1,6 +1,11 @@
-.suggestion
-  .vote-score
-    = suggestion.vote_score
+.suggestion-partial.suggestions-controller
+  .votes
+    .vote-up
+      = link_to 'Up', suggestion_votes_path('suggestion_vote[suggestion_id]' => suggestion.id, 'suggestion_vote[user_id]' => current_user.id, 'suggestion_vote[vote]' => 1), :method => :post
+    .vote-score
+      = suggestion.vote_score
+    .vote-down
+      = link_to 'Down', suggestion_votes_path('suggestion_vote[suggestion_id]' => suggestion.id, 'suggestion_vote[user_id]' => current_user.id, 'suggestion_vote[vote]' => -1), :method => :post
   .title
     = suggestion.title
   .description

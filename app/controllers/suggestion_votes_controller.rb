@@ -44,8 +44,8 @@ class SuggestionVotesController < ApplicationController
 
     respond_to do |format|
       if @suggestion_vote.save
-        format.html { redirect_to @suggestion_vote, notice: 'Suggestion vote was successfully created.' }
-        format.json { render json: @suggestion_vote, status: :created, location: @suggestion_vote }
+        format.html { redirect_to @suggestion_vote.suggestion.project, notice: 'Suggestion vote was successfully created.' }
+        format.json { render json: @suggestion_vote, status: :created, location: @suggestion_vote.suggestion.project }
       else
         format.html { render action: "new" }
         format.json { render json: @suggestion_vote.errors, status: :unprocessable_entity }
