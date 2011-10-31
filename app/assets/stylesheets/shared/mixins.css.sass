@@ -22,7 +22,13 @@
   -moz-border-radius: $border-radius
   border-radius: $border-radius
   
+@mixin drop-shadow
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)
+  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)
+  
 @mixin border
+  @include round-corners
   border: solid $border-width $dark-blue
   
   
