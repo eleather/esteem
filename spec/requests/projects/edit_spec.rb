@@ -58,6 +58,14 @@ describe 'projects/edit.html.haml' do
           radial_divs[i].should have_content(radials[i].description)
         end
       end
+      
+      it 'should display a link to edit a current radial' do
+        radials.each do |radial|
+          @radials_div.should have_link('Edit', :href => edit_radial_path(radial))
+        end
+      end
+      
+      it 'should display a link to delete a current radial'
     
       it 'should display a link to add a new radial' do
         @radials_div.should have_link('Add Radial', :href => new_radial_path(:project_id => project.id))
@@ -91,6 +99,12 @@ describe 'projects/edit.html.haml' do
           questions[i].radials.each do |radial|
             question_divs[i].should have_content(radial.name)
           end
+        end
+      end
+      
+      it 'should display a link to edit a current question' do
+        questions.each do |question|
+          @questions_div.should have_link('Edit', :href => edit_question_path(question))
         end
       end
       

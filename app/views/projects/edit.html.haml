@@ -9,11 +9,11 @@
   #radials
     .section-title
       Radials
-    = render :partial => 'radials/radial_description', :collection => @radials, :as => :radial
+    = render :partial => 'radials/radial_description', :collection => @radials, :as => :radial, :locals => {:editable => true}
     = link_to 'Add Radial', new_radial_path(:project_id => @project.id)
   
   #questions
     .section-title
       Questions
-    = render @questions
+    = render :partial => 'questions/question', :collection => @questions, :locals => {:editable => true}
     = link_to 'Add Question', new_question_path(:project_id => @project.id)
