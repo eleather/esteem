@@ -15,3 +15,5 @@
   #questions
     .section-title
       Questions
+    = render @questions
+    = link_to 'Add Question', new_question_path(:project_id => @project.id)

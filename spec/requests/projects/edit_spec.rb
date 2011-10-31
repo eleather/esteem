@@ -66,9 +66,39 @@ describe 'projects/edit.html.haml' do
   end
   
   describe 'in #questions section' do
-    it 'should display current questions'
-    it 'should display a link to tag a question with a new radial'
-    it 'should display a link to remove a radial tag from a question'
-    it 'should display a link to add a new question'
+    describe 'when project has no questions' do
+      it 'should display a link to add a new question' do
+        visit edit_project_path(project)
+        page.should have_link('Add Question', :href => new_question_path(:project_id => project.id))
+      end
+    end
+    
+    describe 'when project has some questions' do
+      before(:each) do
+        questions
+        visit edit_project_path(project)
+        
+        page.should have_selector('#questions')
+        @questions_div = page.find('#questions')
+      end
+      
+      it 'should display current questions' do
+        question_divs = @questions_div.all('.question-partial')
+        question_divs.size.should eq(questions.size)
+        questions.each_index do |i|
+          question_divs[i].should have_content(questions[i].title)
+          question_divs[i].should have_content(questions[i].description)
+          questions[i].radials.each do |radial|
+            question_divs[i].should have_content(radial.name)
+          end
+        end
+      end
+      
+      it 'should display a link to tag a question with a new radial'
+      it 'should display a link to remove a radial tag from a question'
+      it 'should display a link to add a new question' do
+        @questions_div.should have_link('Add Question', :href => new_question_path(:project_id => project.id))
+      end
+    end
   end
 end
