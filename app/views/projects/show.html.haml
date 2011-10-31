@@ -1,41 +1,42 @@
-#scaffold-deprecated
-  %p#notice= notice
+#show-template.projects-controller
+  #scaffold-deprecated
+    %p#notice= notice
 
-  %p
-    %b Name:
-    = @project.name
-  %p
-    %b Slug:
-    = @project.slug
-  %p
-    %b Description:
-    = @project.description
-  %p
-    %b Organization:
-    = link_to @project.organization.name, @project.organization
+    %p
+      %b Name:
+      = @project.name
+    %p
+      %b Slug:
+      = @project.slug
+    %p
+      %b Description:
+      = @project.description
+    %p
+      %b Organization:
+      = link_to @project.organization.name, @project.organization
 
-  = link_to 'Edit', edit_project_path(@project)
-  \|
-  = link_to 'Back', projects_path
+    = link_to 'Edit', edit_project_path(@project)
+    \|
+    = link_to 'Back', projects_path
 
-- if @radials.any?
-  #radials
-    = link_to 'Learn More', radials_project_path(@project)
-    #data
-      = render :partial => 'radials/radial_score', :collection => @radials, :as => :radial
-    #graph
-      #radar-chart{:style => "width: 700px; height: 500px; float: left; border: 1px dashed gainsboro;"}
-      :javascript
-        var chart = new RadarChart({labels: #{@radial_score_map.map(&:first).inspect}});
-        chart.draw(#{@radial_score_map.map(&:last).inspect});
+  - if @radials.any?
+    #radials
+      = link_to 'Learn More', radials_project_path(@project)
+      #data
+        = render :partial => 'radials/radial_score', :collection => @radials, :as => :radial
+      #graph
+        #radar-chart
+        :javascript
+          var chart = new RadarChart({labels: #{@radial_score_map.map(&:first).inspect}});
+          chart.draw(#{@radial_score_map.map(&:last).inspect});
     
  
-- if @questions.any? 
-  #questions
-    = form_tag(answer_questions_project_path(@project)) do
-      = render :partial => 'questions/ask', :collection => @questions, :as => :question
-      = submit_tag 'Done!'
+  - if @questions.any? 
+    #questions
+      = form_tag(answer_questions_project_path(@project)) do
+        = render :partial => 'questions/ask', :collection => @questions, :as => :question
+        = submit_tag 'Done!'
 
-#suggestions
-  = render :partial => 'suggestions/new'
-  = render @suggestions
+  #suggestions
+    = render :partial => 'suggestions/new'
+    = render @suggestions
