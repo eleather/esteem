@@ -10,5 +10,5 @@
           %td= i
       %tr
         - 1.upto(5) do |i|
-          %td= radio_button_tag "question[#{question.id}]", i, false, :index => question.id
+          %td= radio_button_tag "question_responses[#{question.id}]", i, false, :index => question.id
       

@@ -104,4 +104,19 @@ class ProjectsController < ApplicationController
       format.json { render json: @radials }
     end
   end
+  
+  # POST /projects/1/answer_questions
+  # POST /projects/1/answer_questions.json
+  def answer_questions
+    @project = Project.find(params[:id])
+    @question_responses = []
+    params[:question_responses].each do |question_id, response|
+      @question_responses << QuestionResponse.create!(:question_id => question_id.to_i, :user => current_user, :response => response.to_i)
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to @project, notice: 'Thanks!  Your answers have been saved.' }
+      format.json { render json: @question_responses, status: :created, location: @project }
+    end
+  end
 end

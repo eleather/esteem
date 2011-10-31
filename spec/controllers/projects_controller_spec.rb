@@ -253,5 +253,23 @@ describe ProjectsController do
         assigns(:radials).should eq(radials)
       end
     end
+    
+    describe 'POST answer_questions' do
+      let :fake_post_data do
+        {'1' => '1', '2' => '3', '3' => '5'}
+      end
+      
+      it 'records the user\'s responses' do
+        QuestionResponse.should_receive('create!').with({:question_id => 1, :user => user, :response => 1})
+        QuestionResponse.should_receive('create!').with({:question_id => 2, :user => user, :response => 3})
+        QuestionResponse.should_receive('create!').with({:question_id => 3, :user => user, :response => 5})
+        post :answer_questions, :id => project.id, :question_responses => fake_post_data
+      end
+      
+      it 'redirects to the project' do
+        post :answer_questions, :id => project.id, :question_responses => fake_post_data
+        response.should redirect_to(project)
+      end
+    end
   end
 end
