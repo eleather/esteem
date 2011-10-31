@@ -1,8 +1,19 @@
 /*
+ * Constants
+ */
+ 
+$dark-blue: #003366
+$light-blue: #005EBD
+$teal: #00B3B3
+
+$border-width: 1px
+$border-radius: 5px
+
+/*
  * Clearfix hack from http://css-tricks.com/snippets/css/clear-fix/
  */
  
-.group
+@mixin group
   zoom: 1 /* For IE 6/7 (trigger hasLayout) */
   
   &:before, &:after
@@ -13,15 +24,30 @@
     clear: both
 
 
-/* 
- * Styles for layout elements.
+/*
+ * Mixins for borders and shapes.
  */
-.layouts
-  &#header-partial
-    @extend .group
-    
-    #logo
-      float: left
+
+@mixin round-corners
+  -webkit-border-radius: $border-radius
+  -moz-border-radius: $border-radius
+  border-radius: $border-radius
   
-    #session-management
-      float: right
+@mixin border
+  border: solid $border-width $dark-blue
+  
+
+/*
+ * Mixins for backgrounds.
+ */
+ 
+
+/*
+ * Mixins for text.
+ */
+ 
+@mixin title
+  font:
+    size: 1.5em
+    weight: bold
+

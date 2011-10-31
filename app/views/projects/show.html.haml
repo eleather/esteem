@@ -1,8 +1,8 @@
 #show-template.projects-controller
   #project-header
-    %p
+    #name
       = @project.name
-    %p
+    #description
       = @project.description
 
   - if @radials.any?
