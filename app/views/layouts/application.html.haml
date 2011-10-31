@@ -8,8 +8,9 @@
 
   %body
     = render :partial => 'layouts/header'
-  
-    %p.notice= notice
-    %p.alert= alert
 
-    = yield
+    #page-content
+      %p.notice= notice
+      %p.alert= alert
+      
+      = yield

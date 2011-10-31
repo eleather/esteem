@@ -3,6 +3,8 @@
 .layouts
   &#header-partial
     @include group
+    @include padded-double
+    background: $light-blue
     
     #logo
       @include border
@@ -16,3 +18,7 @@
   
     #session-management
       float: right
+
+
+#page-content
+  @include padded-double
