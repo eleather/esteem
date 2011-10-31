@@ -12,7 +12,7 @@ class Project < ActiveRecord::Base
     raise 'user is nil' if user.nil?
     
     # Get questions the user has answered.
-    user_answered_questions = QuestionResponse.where(:user_id => user.id)
+    user_answered_questions = QuestionResponse.where(:user_id => user.id).map(&:question)
     
     # Subtract those from the full set of questions to get the set of any that
     # have not been answered.

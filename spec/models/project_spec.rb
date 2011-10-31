@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Project do
+  let :user do
+    Factory(:user)
+  end
+  
   let :project do
     Factory(:project)
   end
@@ -10,8 +14,12 @@ describe Project do
     (1..6).map { Factory(:question, :project => project) }
   end
   
-  let :user do
-    Factory(:user)
+  let :question_responses do
+    questions
+    user
+    questions.map do |question|
+      Factory(:question_response, :question_id => question.id)
+    end
   end
   
   describe '.get_unanswered_questions_for_user' do
@@ -36,7 +44,7 @@ describe Project do
     describe 'when user has answered some questions recently for this project' do
       it 'should return only the questions the user hasn\'t answered recently' do
         questions
-        QuestionResponse.should_receive(:where).with(:user_id => user.id).and_return(questions[0..1])
+        QuestionResponse.should_receive(:where).with(:user_id => user.id).and_return(question_responses[0..1])
         project.get_unanswered_questions_for_user(user).should eq(questions[2..questions.size])
       end
     end
@@ -44,7 +52,7 @@ describe Project do
     describe 'when user has answered all questions recently for this project' do
       it 'should return an empty array' do
         questions
-        QuestionResponse.should_receive(:where).with(:user_id => user.id).and_return(questions)
+        QuestionResponse.should_receive(:where).with(:user_id => user.id).and_return(question_responses)
         project.get_unanswered_questions_for_user(user).should eq([])
       end
     end

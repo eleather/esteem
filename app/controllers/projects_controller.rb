@@ -115,7 +115,7 @@ class ProjectsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to @project, notice: 'Thanks!  Your answers have been saved.' }
+      format.html { redirect_to @project, notice: 'Your answers have been saved.  Thanks!' }
       format.json { render json: @question_responses, status: :created, location: @project }
     end
   end
