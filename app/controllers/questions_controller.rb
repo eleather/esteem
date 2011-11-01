@@ -24,7 +24,11 @@ class QuestionsController < ApplicationController
   # GET /questions/new
   # GET /questions/new.json
   def new
-    @question = Question.new
+    if params[:project_id]
+      @question = Question.new(:project_id => params[:project_id])
+    else
+      raise 'project_id parameter is required'
+    end
 
     respond_to do |format|
       format.html # new.html.erb

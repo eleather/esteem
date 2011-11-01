@@ -1,8 +1,14 @@
 .radial-description-partial.radials-controller
+  - if !defined?(editable)
+    - editable = false
+  
   .radial-name
     = radial.name
   .edit-link
-    - if defined?(editable) and editable
+    - if editable
       = link_to 'Edit', edit_radial_path(radial)
   .radial-description
-    = radial.description
+    - if editable and radial.description.blank?
+      This radial has no description.  You can add one by using the edit link above.
+    - else
+      = radial.description

@@ -46,9 +46,14 @@ describe QuestionsController do
   end
 
   describe "GET new" do
-    it "assigns a new question as @question" do
-      get :new
+    it "assigns a new question with project_id set as @question" do
+      get :new, :project_id => 123
       assigns(:question).should be_a_new(Question)
+      assigns(:question).project_id.should eq(123)
+    end
+    
+    it 'should raise an error if project_id is not passed in' do
+      lambda { get :new }.should raise_error('project_id parameter is required')
     end
   end
 

@@ -6,18 +6,23 @@ body
   background: $sand-lightened-5
 
 
-.field
-  label
-    font-weight: bold
+form
+  .field
+    label
+      font-weight: bold
 
-  input
-    @include border
-    @include padded
-    width: 100%
-    height: 20px
+    input
+      @include border
+      @include padded
+      width: 100%
+      height: 20px
 
-  textarea
-    @include border
-    @include padded
-    width: 100%
-    height: 75px
+    textarea
+      @include border
+      @include padded
+      width: 100%
+      height: 75px
+    
+  .actions
+    input
+      @include button-light

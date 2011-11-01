@@ -71,6 +71,13 @@ describe 'projects/edit.html.haml' do
         @radials_div.should have_link('Add Radial', :href => new_radial_path(:project_id => project.id))
       end
     end
+    
+    it 'should display text letting the user know they can edit the radial if it has no description' do
+      radial = Factory(:radial, :description => '')
+      visit edit_project_path(project)
+      
+      page.should have_content('This radial has no description.  You can add one by using the edit link above.')
+    end
   end
   
   describe 'in #questions section' do
