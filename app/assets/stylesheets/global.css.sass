@@ -7,22 +7,20 @@ body
 
 
 form
-  .field
-    label
-      font-weight: bold
+  label
+    font-weight: bold
 
-    input
-      @include border
-      @include padded
-      width: 100%
-      height: 20px
+  input[type='email'], input[type='password']
+    @include border
+    @include padded
+    width: 100%
+    height: 20px
 
-    textarea
-      @include border
-      @include padded
-      width: 100%
-      height: 75px
-    
-  .actions
-    input
-      @include button-light
+  textarea
+    @include border
+    @include padded
+    width: 100%
+    height: 75px
+
+  input[type='submit']
+    @include button-light
