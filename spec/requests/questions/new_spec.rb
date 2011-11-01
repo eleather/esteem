@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe 'questions/new.html.haml' do
   before(:each) do
-    visit new_question_path
+    project = Factory(:project)
+    visit new_question_path(:project_id => project.id)
   end
 
   it 'renders the edit question form' do
