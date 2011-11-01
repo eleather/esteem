@@ -121,6 +121,23 @@
  */
 
 @mixin page-section
+  @include margined-double-vertical
+
   .section-title
+    @include sub-title
+    @include margined-vertical
+    
+
+/* 
+ * Basic module mixins.  (Modules are like page sections, but can orruc at any
+ * place in the page hierarcy.)
+ */
+
+@mixin module
+  @include margined-vertical
+  @include border
+  @include padded-double
+
+  .title
     @include sub-title
     @include margined-vertical
