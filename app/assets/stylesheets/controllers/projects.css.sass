@@ -21,26 +21,29 @@
       #description
         @include margined-vertical
         clear: left
-  
-    #radials
+
+    #radials-and-questions
       float: left
+      width: 640px
       
-      #learn-more
-        @include margined
-        float: right
+      #radials
+        @include border-dashed
     
-      #graph
-        #radar-chart
-          @include border-dashed
-          width: 640px
-          height: 500px
+        #learn-more
+          @include margined
+          float: right
+    
+        #graph
+          #radar-chart
+            height: 500px
           
-    #questions
-      float: left
+      #questions
+        @include border-dashed
+        @include padded
     
     #suggestions
-      width:  35%
-      float:  right
+      float: right
+      width: 35%
       
       
   &#edit-template
