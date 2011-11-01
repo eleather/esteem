@@ -78,9 +78,9 @@ describe QuestionsController do
         assigns(:question).should be_persisted
       end
 
-      it "redirects to the created question" do
+      it "redirects to the created question's project" do
         post :create, :question => @valid_attributes
-        response.should redirect_to(Question.last)
+        response.should redirect_to(Question.last.project)
       end
     end
 
