@@ -24,6 +24,10 @@ gem 'devise'
 gem 'haml-rails'
 
 
+# Seed data and fixtures.
+gem 'seed-fu', '~> 2.1.0'
+
+
 # Use rspec for testing
 gem 'rspec-rails', :group => [:test, :development]
 group :test do  
