@@ -68,10 +68,27 @@ Radial.find(5).questions = [Question.find(5)]
 Radial.find(6).questions = [Question.find(6), Question.find(9), Question.find(10)]
 
 
+1.upto(10) do |i|
+  QuestionResponse.create(
+    id: i,
+    question_id: i,
+    user_id: 1,
+    response: (1 + (i % 5))
+  )
+end
+
+
 Suggestion.create(
   id: 1,
   title: "Suggestion",
-  description: "This is a default suggestion.",
+  description: "This is an example suggestion.",
   project_id: 1,
   user_id: 1
+)
+
+SuggestionVote.create(
+  id: 1,
+  suggestion_id: 1,
+  user_id: 1,
+  vote: 1
 )
