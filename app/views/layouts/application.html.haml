@@ -11,6 +11,8 @@
       = render :partial => 'layouts/header'
 
       #page-content
-        %p.notice= notice
-        %p.alert= alert
+        - if notice
+          = render :partial => 'shared/highlight_box', :locals => {:text => notice}
+        - if alert
+          = render :partial => 'shared/error_box', :locals => {:text => alert}
         = yield

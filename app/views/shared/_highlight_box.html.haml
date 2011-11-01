@@ -1,0 +1,10 @@
+- strong_text = '' unless defined?(strong_text)
+- text = '' unless defined?(text)
+
+.ui-widget
+  .ui-state-highlight.ui-corner-all{:style => "margin-top: 20px; padding: 0 .7em;"}
+    %p
+      %span.ui-icon.ui-icon-info{:style => "float: left; margin-right: .3em;"}
+      %strong= strong_text
+      = text
+      

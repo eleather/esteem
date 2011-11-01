@@ -5,11 +5,14 @@
 @import 'global.css.sass'
 
 .questions-controller
+  .question-title
+    @include sub-sub-title
+
+
   &.question-partial
     @include margined-vertical
     
     .question-title
-      @include sub-sub-title
       float: left
     
     .edit-link
