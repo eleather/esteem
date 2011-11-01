@@ -117,6 +117,27 @@
     
     
 /*
+ * Mixins for button styles.
+ */
+ 
+@mixin button($background-color, $text-color)
+  @include border
+  @include padded
+  background: $background-color url("/assets/textures/gradient.png") repeat-x
+  color: $text-color
+  a
+    color: $text-color
+    text-decoration: none
+ 
+@mixin button-light
+  @include button($light-blue, $dark-blue)
+
+@mixin button-dark
+  @include button($dark-blue, $sand)
+
+    
+    
+/*
  * Basic page section mixins.
  */
 

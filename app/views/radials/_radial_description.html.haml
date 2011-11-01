@@ -1,10 +1,8 @@
 .radial-description-partial.radials-controller
-  .name
+  .radial-name
     = radial.name
   .edit-link
     - if defined?(editable) and editable
-      [
       = link_to 'Edit', edit_radial_path(radial)
-      ]
-  .description
+  .radial-description
     = radial.description

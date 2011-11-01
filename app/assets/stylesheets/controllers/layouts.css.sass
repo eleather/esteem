@@ -14,14 +14,11 @@
       @include page-configuration
       
       #logo
-        @include border
+        @include button-dark
         float: left
-        background: $dark-blue url("/assets/textures/gradient.png") repeat-x
         padding: (3 * $padding-increment) (4 * $padding-increment)
         a
           @include title
-          text-decoration: none
-          color: $sand
 
       #session-management
         float: right
