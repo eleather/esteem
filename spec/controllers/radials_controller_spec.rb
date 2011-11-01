@@ -149,5 +149,4 @@ describe RadialsController do
       response.should redirect_to(radials_url)
     end
   end
-
 end
