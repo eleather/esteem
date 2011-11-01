@@ -22,6 +22,7 @@ gem 'devise'
 
 # Gems for views.
 gem 'haml-rails'
+gem 'breadcrumbs_on_rails'
 
 
 # Seed data and fixtures.

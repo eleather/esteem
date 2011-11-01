@@ -1,14 +1,14 @@
-// Place all the styles related to the radials controller here.
+// Place all the styles related to the questions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import 'global.css.sass'
 
-.radials-controller
-  &.radial-description-partial
+.questions-controller
+  &.question-partial
     @include margined-vertical
     
-    .radial-name
+    .question-title
       @include sub-sub-title
       float: left
     
@@ -16,16 +16,7 @@
       @include margined-horizontal
       float: left
       
-    .radial-description
-      clear: both
-
-
-  &.radial-score-partial
-    @include margined
-    float: left
+    .question-radials
+      clear: left
     
-    .name
-      font:
-        weight: bold
-        
-    .score
+    .question-description

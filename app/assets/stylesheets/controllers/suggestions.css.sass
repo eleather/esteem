@@ -7,7 +7,7 @@
 .suggestions-controller
   &.suggestion-partial
     @include group
-    @include round-corners
+    @include margined-vertical
     @include border
     @include padded-double
     background: $sand
@@ -15,6 +15,7 @@
     .votes
       float: left
       margin-right: $margin-increment
+      text-align: center
         
       .vote-score
         @include sub-title
@@ -26,24 +27,14 @@
     .description
 
   &#new-suggestion-partial
-    @include round-corners
     @include border
     @include padded-double
-    background: $teal
+    background: $light-blue
   
     #text
       @include sub-title
       margin: 5px
     
     .field
-      input
-        @include round-corners
-        @include border
-        width: 100%
-        height: 20px
-  
-      textarea
-        @include round-corners
-        @include border
-        width: 100%
-        height: 75px
+      width: 96.5% // Can't use 100% because there's padding in the inputs.
+    

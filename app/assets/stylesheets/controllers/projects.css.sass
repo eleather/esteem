@@ -31,13 +31,26 @@
     
       #graph
         #radar-chart
-          width: 700px
+          @include border-dashed
+          width: 640px
           height: 500px
-          border: 1px dashed gainsboro
           
     #questions
       float: left
     
     #suggestions
-      width:  30%
+      width:  35%
       float:  right
+      
+      
+  &#edit-template
+    #project-details
+      @include module
+      
+      form
+        width: 50%
+      
+  
+    #radials, #questions
+      @include module
+    

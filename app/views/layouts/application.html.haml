@@ -7,9 +7,10 @@
     = csrf_meta_tags
 
   %body
-    = render :partial => 'layouts/header'
-  
-    %p.notice= notice
-    %p.alert= alert
+    #page-container     
+      = render :partial => 'layouts/header'
 
-    = yield
+      #page-content
+        %p.notice= notice
+        %p.alert= alert
+        = yield

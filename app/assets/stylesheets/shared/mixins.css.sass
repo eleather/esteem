@@ -22,8 +22,17 @@
   -moz-border-radius: $border-radius
   border-radius: $border-radius
   
+@mixin drop-shadow
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)
+  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)
+  
 @mixin border
+  @include round-corners
   border: solid $border-width $dark-blue
+  
+@mixin border-dashed
+  border: 1px dashed gainsboro
   
   
 /*
@@ -61,6 +70,11 @@
   margin:
     top: $margin-increment
     bottom: $margin-increment
+    
+@mixin margined-horizontal
+  margin:
+    left: $margin-increment
+    right: $margin-increment
   
 @mixin margined-double
   margin: 2 * $margin-increment
@@ -75,6 +89,11 @@
   
 @mixin padded-double
   padding: 2 * $padding-increment
+  
+@mixin padded-double-vertical
+  padding: 
+    top: 2 * $padding-increment
+    bottom: 2 * $padding-increment
  
 
 /*
@@ -90,4 +109,56 @@
   font: 
     size: 1.2em
     weight: bold
+    
+@mixin sub-sub-title
+  font: 
+    size: 1.1em
+    weight: bold
+    
+    
+/*
+ * Mixins for button styles.
+ */
+ 
+@mixin button($background-color, $text-color)
+  @include border
+  @include padded
+  background: $background-color url("/assets/textures/gradient.png") repeat-x
+  color: $text-color
+  a
+    color: $text-color
+    text-decoration: none
+ 
+@mixin button-light
+  @include button($light-blue, $dark-blue)
 
+@mixin button-dark
+  @include button($dark-blue, $sand)
+
+    
+    
+/*
+ * Basic page section mixins.
+ */
+
+@mixin page-section
+  @include margined-double-vertical
+
+  .section-title
+    @include sub-title
+    @include margined-vertical
+    
+
+/* 
+ * Basic module mixins.  (Modules are like page sections, but can orruc at any
+ * place in the page hierarcy.)
+ */
+
+@mixin module
+  @include margined-vertical
+  @include border
+  @include padded-double
+
+  .title
+    @include sub-title
+    @include margined-vertical

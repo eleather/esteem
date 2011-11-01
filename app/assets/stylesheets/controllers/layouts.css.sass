@@ -1,16 +1,30 @@
 @import 'global.css.sass'
 
+@mixin page-configuration
+  width: 1000px
+  margin: 0 auto
+
 .layouts
   &#header-partial
     @include group
+    @include padded-double-vertical
+    background: $light-blue
     
-    #logo
-      @include round-corners
-      @include border
-      float: left
-      padding: 15px 20px
-      a
-        text-decoration: none
-  
-    #session-management
-      float: right
+    #header-content
+      @include page-configuration
+      
+      #logo
+        @include button-dark
+        float: left
+        padding: (3 * $padding-increment) (4 * $padding-increment)
+        a
+          @include title
+
+      #session-management
+        float: right
+
+
+#page-container
+  #page-content
+    @include page-configuration
+    @include padded-double-vertical

@@ -41,7 +41,12 @@ describe ProjectsController do
   
   let :radials do
     project
-    radials = (1..3).map { Factory(:radial, :project => project) }
+    (1..3).map { Factory(:radial, :project => project) }
+  end
+  
+  let :questions do
+    project
+    (1..3).map { Factory(:question, :project => project)}
   end
   
   
@@ -157,6 +162,28 @@ describe ProjectsController do
       it "assigns the requested project as @project" do
         get :edit, :id => project.id
         assigns(:project).should eq(project)
+      end
+      
+      it 'assigns an empty array as @radials if the project has no radials' do
+        get :edit, :id => project.id
+        assigns(:radials).should eq([])
+      end
+      
+      it 'assigns the project\'s radials as @radials' do
+        radials
+        get :edit, :id => project.id
+        assigns(:radials).should eq(radials)
+      end
+      
+      it 'assigns an empty array as @questions if the project has no questions' do
+        get :edit, :id => project.id
+        assigns(:questions).should eq([])
+      end
+      
+      it 'assigns the project\'s questions as @questions' do
+        questions
+        get :edit, :id => project.id
+        assigns(:questions).should eq(questions)
       end
     end
 

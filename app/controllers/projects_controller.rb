@@ -1,6 +1,10 @@
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!
   
+  def _set_project_breadcrumb
+    add_breadcrumb @project.name, project_path(@project)
+  end
+  
   # GET /projects
   # GET /projects.json
   def index
@@ -26,6 +30,9 @@ class ProjectsController < ApplicationController
     
     # New Suggestion for form
     @suggestion = Suggestion.new(:project_id => @project.id, :user_id => current_user.id)
+    
+    # Set breadcrumbs
+    _set_project_breadcrumb
 
     respond_to do |format|
       format.html # show.html.erb
@@ -51,6 +58,12 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
+    @radials = @project.radials
+    @questions = @project.questions
+    
+    # Set breadcrumbs
+    _set_project_breadcrumb
+    add_breadcrumb 'Edit', edit_project_path(@project)
   end
 
   # POST /projects

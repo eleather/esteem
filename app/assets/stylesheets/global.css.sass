@@ -2,4 +2,27 @@
 @import 'shared/mixins.css.sass'
 
 body
-  @include padded
+  margin: 0px
+  background: $sand-lightened-5
+
+
+form
+  .field
+    label
+      font-weight: bold
+
+    input
+      @include border
+      @include padded
+      width: 100%
+      height: 20px
+
+    textarea
+      @include border
+      @include padded
+      width: 100%
+      height: 75px
+    
+  .actions
+    input
+      @include button-light

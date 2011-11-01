@@ -1,0 +1,10 @@
+.question-partial.questions-controller
+  .question-title
+    = question.title
+  .edit-link
+    - if defined?(editable) and editable
+      = link_to 'Edit', edit_question_path(question)
+  .question-radials
+    = question.radials.map(&:name).to_sentence
+  .question-description
+    = question.description
