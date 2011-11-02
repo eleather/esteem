@@ -6,14 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create(
+User.create!(
   id: 1,
   email: "test@example.com",
-  password: "test"
+  password: "testtest"
 )
 
 
-Organization.create(
+Organization.create!(
   id: 1,
   name: "ExampleCo",
   slug: "exampleco",
@@ -21,7 +21,7 @@ Organization.create(
 )
 
 
-Project.create(
+Project.create!(
   id: 1,
   name: "Test",
   slug: "test",
@@ -31,7 +31,7 @@ Project.create(
 
 
 1.upto(10) do |i|
-  Question.create(
+  Question.create!(
     id: i, 
     title: "Question #{i}", 
     description: "How do you feel about default question #{i}?",
@@ -40,7 +40,7 @@ end
 
 
 1.upto(6) do |i|
-  Radial.create(
+  Radial.create!(
     id: i,
     name: "Radial #{i}",
     description: "This is radial #{i}.",
@@ -69,7 +69,7 @@ Radial.find(6).questions = [Question.find(6), Question.find(9), Question.find(10
 
 
 1.upto(10) do |i|
-  QuestionResponse.create(
+  QuestionResponse.create!(
     id: i,
     question_id: i,
     user_id: 1,
@@ -78,7 +78,7 @@ Radial.find(6).questions = [Question.find(6), Question.find(9), Question.find(10
 end
 
 
-Suggestion.create(
+Suggestion.create!(
   id: 1,
   title: "Suggestion",
   description: "This is an example suggestion.",
@@ -86,7 +86,7 @@ Suggestion.create(
   user_id: 1
 )
 
-SuggestionVote.create(
+SuggestionVote.create!(
   id: 1,
   suggestion_id: 1,
   user_id: 1,
